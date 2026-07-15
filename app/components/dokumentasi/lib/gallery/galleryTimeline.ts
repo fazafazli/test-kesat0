@@ -37,41 +37,39 @@ export const createGalleryTimeline = (
       isMobile: "(max-width: 767px)",
       // gsap.matchMedia only re-runs this callback when one of these query
       // strings flips true/false — it does NOT re-run on every resize.
-      // Since mScale below also reacts to window.innerHeight (for landscape
-      // detection), a device rotating from portrait to landscape at a width
-      // that stays within the same isMobile/isTablet bucket would otherwise
-      // never trigger a recompute. This extra query flips whenever the
-      // viewport becomes "short" relative to its width, forcing a re-run
-      // (and therefore a fresh mScale calculation) on rotation.
-      isShortViewport: "(max-aspect-ratio: 1.3) and (max-height: 500px)",
+      // Since mScale below also reacts to window.innerHeight and aspect
+      // ratio, a resize/rotation that stays within the same
+      // isMobile/isTablet/isDesktop width bucket would otherwise never
+      // trigger a recompute. This query flips whenever the viewport becomes
+      // "wide" relative to its height (matches the wideAspectTrim threshold
+      // below), forcing a re-run on rotation or window resize.
+      isWideAspect: "(min-aspect-ratio: 1.6)",
     },
     (context) => {
       const { isMobile, isTablet } = context.conditions as {
         isMobile: boolean;
         isTablet: boolean;
         isDesktop: boolean;
-        isShortViewport: boolean;
+        isWideAspect: boolean;
       };
 
       // --- Unified scale strategy (width AND height aware) ---
       // The collage's finalTransform values mix vw (horizontal spread) and
-      // vh (vertical spread). A width-only breakpoint (previous approach)
-      // handles narrow-but-tall phones fine, but fails for LANDSCAPE
-      // orientations: a rotated phone/tablet can have a "desktop-range"
-      // width (e.g. 900-1100px) while its height is only 400-500px. Vertical
-      // vh-based offsets (-46vh, 22vh, etc.) then occupy a much larger
-      // fraction of the actually-available vertical pixels, so images that
-      // looked fine in portrait collide in landscape even though the width
-      // breakpoint alone looked "safe".
-      //
-      // Fix: compute scale from whichever dimension is more constraining —
-      // width vs a desktop reference, AND height vs a reference "comfortable"
-      // height — and take the smaller (more conservative) of the two. This
-      // naturally scales down short-but-wide landscape viewports without
-      // needing a separate landscape media query to maintain.
+      // vh (vertical spread). Because spacing between rows is defined in
+      // vh, ANY viewport where height is the more constrained dimension —
+      // which includes ordinary desktop/laptop screens (1920x1080,
+      // 1366x768, etc. are all wider than tall) — will pack rows closer
+      // together in absolute pixels than a portrait phone does. The
+      // previous REFERENCE_HEIGHT of 1000 was higher than most real
+      // viewports (browser chrome eats ~80-150px, so a 1080px display often
+      // reports ~900-950px innerHeight), which meant this scale rarely
+      // engaged for ordinary wide screens — exactly where the overlap was
+      // reported. Lowering the reference to a realistic laptop viewport
+      // height and giving height double the weight of width fixes this:
+      // wide-but-not-super-tall screens now reliably scale down.
       const REFERENCE_WIDTH = 1920;
-      const REFERENCE_HEIGHT = 1000;
-      const MIN_SCALE = 0.55;
+      const REFERENCE_HEIGHT = 800; // realistic laptop viewport height, not display height
+      const MIN_SCALE = 0.5;
       const MAX_SCALE = 1;
 
       const vw = window.innerWidth;
@@ -80,18 +78,33 @@ export const createGalleryTimeline = (
       const widthFactor = vw / REFERENCE_WIDTH;
       const heightFactor = vh / REFERENCE_HEIGHT;
 
-      // Base scale from viewport geometry alone (pre-device-class trim).
+      // Height is weighted more heavily than width because the collage's
+      // vertical spacing (vh-based) is what actually collides when a
+      // screen is wide but not tall — a wide screen with normal height is
+      // fine, but height is the dimension that must shrink the layout when
+      // it's the constraining one.
       const geometryScale = Math.min(
         MAX_SCALE,
-        Math.max(MIN_SCALE, Math.min(widthFactor, heightFactor))
+        Math.max(MIN_SCALE, Math.min(widthFactor, heightFactor * 1.0))
       );
+
+      // Additionally: explicitly detect "wide aspect ratio" (width clearly
+      // exceeds height, e.g. > 1.6:1) and apply an extra trim on top of the
+      // geometry scale. This directly targets the reported bug — landscape
+      // desktops/laptops/tablets where width > height by a good margin —
+      // independent of absolute pixel size.
+      const aspectRatio = vw / vh;
+      const wideAspectTrim = aspectRatio > 1.6 ? 0.85 : 1;
 
       // Device-class still applies its own extra trim on top, since phones
       // in portrait need noticeably denser packing regardless of geometry
       // math (touch targets, single-column reading flow, etc).
       const deviceTrim = isMobile ? 0.82 : isTablet ? 0.85 : 1;
 
-      const mScale = Math.max(MIN_SCALE, geometryScale * deviceTrim);
+      const mScale = Math.max(
+        MIN_SCALE,
+        geometryScale * deviceTrim * wideAspectTrim
+      );
 
       tl.clear();
 
