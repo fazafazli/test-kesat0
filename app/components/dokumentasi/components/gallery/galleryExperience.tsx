@@ -20,6 +20,7 @@ export default function GalleryExperience() {
 
   useLayoutEffect(() => {
     let cancelled = false;
+    let ro: ResizeObserver | null = null;
 
     const ctx = gsap.context(() => {
       if (
@@ -54,21 +55,60 @@ export default function GalleryExperience() {
       });
 
       // --- Fix for "images pile up unstyled, then snap into place later" ---
-      // ScrollTrigger measures this section's pinned start/end distance as
-      // soon as it's created. If the 11 <img> elements haven't finished
-      // loading yet, the browser may still be reflowing the page as each
-      // image resolves its intrinsic size, silently invalidating the
-      // start/end ScrollTrigger already computed. The gsap.set() initial
-      // positions in createGalleryTimeline also only visually "count" once
-      // paint happens — until then you see the raw stacked HTML position
-      // (centered, untransformed), which matches exactly what was reported.
+      // This turned out to have TWO causes, not one:
       //
-      // Fix: build the animation timeline immediately (so there's no visual
-      // gap), but explicitly wait for every gallery <img> to finish loading
-      // (or fail) before calling ScrollTrigger.refresh(). This re-measures
-      // pin start/end against the FINAL, fully-loaded layout, so scroll
-      // math stays correct from the first scroll instead of "fixing itself"
-      // only after images finish loading on their own several tweens later.
+      // 1. Images loading after ScrollTrigger's initial measurement
+      //    (handled below by waiting for every <img> to finish loading).
+      //
+      // 2. Next.js 16 production builds split CSS into multiple chunks and
+      //    `<link rel="preload">` them, but the browser can apply/execute
+      //    some of those chunks noticeably AFTER the initial paint and
+      //    even after `window.load` fires in some cases (visible as
+      //    "preloaded but not used within a few seconds" console warnings
+      //    in production — this does NOT happen in `next dev`, since dev
+      //    serves CSS differently, which is why this only reproduced on
+      //    Vercel and never on localhost). If a late-applied chunk contains
+      //    layout-affecting rules (positioning, transforms, breakpoints),
+      //    ScrollTrigger.refresh() can run against a layout that LOOKS
+      //    complete (all images loaded) but isn't fully styled yet.
+      //
+      // Fix: wait for images AND for the window 'load' event AND two
+      // animation frames after that, before the final refresh. This gives
+      // the browser's paint/style pipeline a chance to settle even when
+      // CSS chunks apply late, without needing to know which chunk or
+      // component is responsible.
+      const waitForWindowLoad = () =>
+        new Promise<void>((resolve) => {
+          if (document.readyState === "complete") {
+            resolve();
+          } else {
+            window.addEventListener("load", () => resolve(), { once: true });
+          }
+        });
+
+      const waitForImages = () =>
+        new Promise<void>((resolve) => {
+          if (!triggerRef.current) {
+            resolve();
+            return;
+          }
+          const imgEls = triggerRef.current.querySelectorAll("img");
+          const pending = Array.from(imgEls).filter((img) => !img.complete);
+          if (pending.length === 0) {
+            resolve();
+            return;
+          }
+          let remaining = pending.length;
+          const onSettle = () => {
+            remaining -= 1;
+            if (remaining <= 0) resolve();
+          };
+          pending.forEach((img) => {
+            img.addEventListener("load", onSettle, { once: true });
+            img.addEventListener("error", onSettle, { once: true });
+          });
+        });
+
       createGalleryTimeline(
         triggerRef.current,
         stickyRef.current,
@@ -78,28 +118,42 @@ export default function GalleryExperience() {
         imageRefs.current
       );
 
-      const imgEls = triggerRef.current.querySelectorAll("img");
-      const pending = Array.from(imgEls).filter((img) => !img.complete);
-
-      if (pending.length === 0) {
-        ScrollTrigger.refresh();
-      } else {
-        let remaining = pending.length;
-        const onSettle = () => {
-          remaining -= 1;
-          if (remaining <= 0 && !cancelled) {
-            ScrollTrigger.refresh();
-          }
-        };
-        pending.forEach((img) => {
-          img.addEventListener("load", onSettle, { once: true });
-          img.addEventListener("error", onSettle, { once: true });
+      Promise.all([waitForImages(), waitForWindowLoad()]).then(() => {
+        if (cancelled) return;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!cancelled) ScrollTrigger.refresh();
+          });
         });
-      }
+      });
+
+      // --- Additional safety net: ResizeObserver on the trigger element ---
+      // The waits above cover the two known causes (image load, delayed CSS
+      // chunk application), but rather than trying to enumerate every
+      // possible cause of a late layout shift (web fonts swapping in,
+      // other CSS modules on the page applying late, etc.), this watches
+      // the actual EFFECT: if the trigger section's rendered height changes
+      // at all after mount, something shifted the layout and pin
+      // measurements are now stale — so just refresh again. Debounced
+      // slightly and capped to avoid loops with GSAP's own pin-spacer
+      // element changes.
+      let resizeRefreshCount = 0;
+      let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+      ro = new ResizeObserver(() => {
+        if (cancelled || resizeRefreshCount >= 5) return;
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (cancelled) return;
+          resizeRefreshCount += 1;
+          ScrollTrigger.refresh();
+        }, 150);
+      });
+      if (triggerRef.current) ro.observe(triggerRef.current);
     });
 
     return () => {
       cancelled = true;
+      if (ro) ro.disconnect();
       ctx.revert();
     };
   }, []);
