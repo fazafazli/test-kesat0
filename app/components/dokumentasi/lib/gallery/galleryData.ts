@@ -15,16 +15,8 @@ export interface GalleryImage {
   finalTransform: GalleryTransform;
 }
 
-// NOTE on spacing:
-// Final layout uses 3 rows (top / mid / bottom) x up to 4 columns.
-// Scale values were trimmed slightly (max ~1.0, most ~0.85-0.95) and
-// vh/vw gaps widened so that only image BORDERS touch/overlap slightly
-// (a few vw/vh of shadow overlap for a "collage" feel), never centers
-// or large image bodies. Verified against width/height * scale in vw units
-// (assuming ~1600px viewport reference) to avoid center-mass collisions.
-
 export const galleryData: GalleryImage[] = [
-  // --- ROW 1: TOP ---
+// --- ROW 1: TOP ---
   {
     id: "img12",
     src: "/Gallery/img12.webp",
@@ -32,7 +24,7 @@ export const galleryData: GalleryImage[] = [
     height: 224,
     zIndex: 1,
     initialTransform: { x: "-6vw", y: "2vh", rotation: 3, scale: 0.5 },
-    finalTransform: { x: "-34vw", y: "-46vh", rotation: -8, scale: 0.85 },
+    finalTransform: { x: "-30vw", y: "-44vh", rotation: -8, scale: 1 }, // Pushed way up
   },
   {
     id: "img5",
@@ -41,7 +33,7 @@ export const galleryData: GalleryImage[] = [
     height: 196,
     zIndex: 2,
     initialTransform: { x: "-1vw", y: "-5vh", rotation: 1, scale: 0.6 },
-    finalTransform: { x: "-10vw", y: "-50vh", rotation: 4, scale: 0.9 },
+    finalTransform: { x: "-8vw", y: "-48vh", rotation: 4, scale: 1.05 }, // Pushed way up
   },
   {
     id: "img6",
@@ -50,7 +42,7 @@ export const galleryData: GalleryImage[] = [
     height: 210,
     zIndex: 1,
     initialTransform: { x: "6vw", y: "2vh", rotation: -4, scale: 0.7 },
-    finalTransform: { x: "14vw", y: "-46vh", rotation: -5, scale: 0.85 },
+    finalTransform: { x: "16vw", y: "-44vh", rotation: -5, scale: 1 }, // Pushed way up
   },
   {
     id: "img2",
@@ -59,18 +51,17 @@ export const galleryData: GalleryImage[] = [
     height: 210,
     zIndex: 2,
     initialTransform: { x: "2vw", y: "4vh", rotation: 3, scale: 0.6 },
-    finalTransform: { x: "38vw", y: "-42vh", rotation: 10, scale: 0.9 },
+    finalTransform: { x: "36vw", y: "-40vh", rotation: 10, scale: 1.1 }, // Pushed way up
   },
 
-  // --- ROW 2: MIDDLE ---
-  {
+   {
     id: "img1",
     src: "/Gallery/img1.webp",
     width: 280,
     height: 210,
     zIndex: 2,
     initialTransform: { x: "-5vw", y: "-2vh", rotation: -5, scale: 0.7 },
-    finalTransform: { x: "-40vw", y: "-11vh", rotation: 6, scale: 0.85 },
+    finalTransform: { x: "-38vw", y: "-9.5vh", rotation: 6, scale: 1 }, 
   },
   {
     id: "img3",
@@ -79,7 +70,7 @@ export const galleryData: GalleryImage[] = [
     height: 280,
     zIndex: 4,
     initialTransform: { x: "-3vw", y: "1vh", rotation: -2, scale: 0.65 },
-    finalTransform: { x: "-14vw", y: "-16vh", rotation: -4, scale: 0.9 },
+    finalTransform: { x: "-15vw", y: "-12.5vh", rotation: -4, scale: 1.1 }, 
   },
   {
     id: "img4",
@@ -88,7 +79,7 @@ export const galleryData: GalleryImage[] = [
     height: 210,
     zIndex: 3,
     initialTransform: { x: "4vw", y: "-3vh", rotation: 6, scale: 0.55 },
-    finalTransform: { x: "13vw", y: "-9vh", rotation: 5, scale: 0.85 },
+    finalTransform: { x: "14vw", y: "-8.5vh", rotation: 5, scale: 1.05 }, 
   },
   {
     id: "img10",
@@ -97,10 +88,10 @@ export const galleryData: GalleryImage[] = [
     height: 280,
     zIndex: 3,
     initialTransform: { x: "-2vw", y: "-4vh", rotation: 4, scale: 0.55 },
-    finalTransform: { x: "40vw", y: "-3vh", rotation: -7, scale: 0.85 },
+    finalTransform: { x: "38vw", y: "-4.5vh", rotation: -7, scale: 1 }, 
   },
 
-  // --- ROW 3: BOTTOM ---
+  // --- ROW 3: BOTTOM (Shifted up to ~15vh) ---
   {
     id: "img9",
     src: "/Gallery/img9.webp",
@@ -108,7 +99,7 @@ export const galleryData: GalleryImage[] = [
     height: 210,
     zIndex: 1,
     initialTransform: { x: "0vw", y: "3vh", rotation: -1, scale: 0.5 },
-    finalTransform: { x: "-36vw", y: "22vh", rotation: -12, scale: 0.9 },
+    finalTransform: { x: "-32vw", y: "20.5vh", rotation: -12, scale: 1.05 }, 
   },
   {
     id: "img7",
@@ -117,7 +108,7 @@ export const galleryData: GalleryImage[] = [
     height: 245,
     zIndex: 5,
     initialTransform: { x: "-4vw", y: "6vh", rotation: 2, scale: 0.65 },
-    finalTransform: { x: "-9vw", y: "17vh", rotation: 3, scale: 0.85 },
+    finalTransform: { x: "-10vw", y: "15.5vh", rotation: 3, scale: 1 }, 
   },
   {
     id: "img8",
@@ -126,7 +117,7 @@ export const galleryData: GalleryImage[] = [
     height: 175,
     zIndex: 2,
     initialTransform: { x: "3vw", y: "-1vh", rotation: -3, scale: 0.6 },
-    finalTransform: { x: "13vw", y: "25vh", rotation: -6, scale: 0.9 },
+    finalTransform: { x: "14vw", y: "23.5vh", rotation: -6, scale: 1.1 }, 
   },
   {
     id: "img11",
@@ -135,6 +126,6 @@ export const galleryData: GalleryImage[] = [
     height: 196,
     zIndex: 1,
     initialTransform: { x: "5vw", y: "5vh", rotation: -6, scale: 0.6 },
-    finalTransform: { x: "37vw", y: "27vh", rotation: 8, scale: 0.85 },
+    finalTransform: { x: "35vw", y: "25.5vh", rotation: 8, scale: 0.95 }, 
   },
 ];

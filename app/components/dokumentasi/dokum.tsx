@@ -8,6 +8,7 @@ import "./dokum.css";
 export default function Dokum() {
   return (
     <>
+      {/* Background layer - fixed di luar section agar tidak terpotong overflow-hidden atau terganggu transform GSAP */}
       <div className="fixed inset-0 z-0 bg-[#5e0609] pointer-events-none">
         <div className="absolute inset-0 bg-[url('/dokumentasi/background.svg')] bg-repeat bg-[length:100%_auto] opacity-40" />
         <div className="absolute inset-0 opacity-10">
@@ -21,13 +22,14 @@ export default function Dokum() {
         </div>
       </div>
 
-      <section className="relative z-10 w-full min-h-[100svh] sm:min-h-[110svh] md:min-h-[calc(120vh-80px)] lg:min-h-[calc(220vh-100px)] overflow-hidden flex flex-col justify-between">
+      <section className="relative z-10 w-full min-h-screen md:min-h-[calc(120vh-80px)] lg:min-h-[calc(220vh-100px)] overflow-hidden flex flex-col justify-between">
 
       <div className="absolute inset-0 w-full h-full pointer-events-none animate-slideInInverse">
+        {/* Clouds */}
         <Image
           src="/dokumentasi/Awan.svg"
           alt=""
-          className="absolute top-20 md:top-36 lg:top-44 left-[2.5%] z-[5] w-[60px] sm:w-[100px] md:w-[140px] lg:w-[25vh] h-auto"
+          className="absolute top-20 md:top-36 lg:top-44 left-[2.5%] z-[5] w-[70px] sm:w-[100px] md:w-[140px] lg:w-[25vh] h-auto"
           width={100}
           height={80}
         />
@@ -37,7 +39,7 @@ export default function Dokum() {
         <Image
           src="/dokumentasi/Awan.svg"
           alt=""
-          className="absolute top-20 md:top-36 lg:top-44 right-[2.5%] z-[5] w-[60px] sm:w-[100px] md:w-[140px] lg:w-[25vh] h-auto -scale-x-100"
+          className="absolute top-20 md:top-36 lg:top-44 right-[2.5%] z-[5] w-[70px] sm:w-[100px] md:w-[140px] lg:w-[25vh] h-auto -scale-x-100"
           width={100}
           height={80}
         />
@@ -47,7 +49,7 @@ export default function Dokum() {
         <Image
           src="/dokumentasi/Sayap_kanan.svg"
           alt=""
-          className="absolute top-24 sm:top-32 md:top-46 lg:top-44 left-[25%] z-[5] w-[46vw] sm:w-[50vw] md:w-[40vh] lg:w-[65vh] h-auto -translate-x-1/2"
+          className="absolute top-28 sm:top-32 md:top-46 lg:top-44 left-[25%] z-[5] w-[50vw] md:w-[40vh] lg:w-[65vh] h-auto -translate-x-1/2"
           width={400}
           height={200}
           priority
@@ -55,7 +57,7 @@ export default function Dokum() {
         <Image
           src="/dokumentasi/Sayap_kiri.svg"
           alt=""
-          className="absolute top-24 sm:top-32 md:top-46 lg:top-44 left-[75%] z-[5] w-[46vw] sm:w-[50vw] md:w-[40vh] lg:w-[65vh] h-auto -translate-x-1/2"
+          className="absolute top-28 sm:top-32 md:top-46 lg:top-44 left-[75%] z-[5] w-[50vw] md:w-[40vh] lg:w-[65vh] h-auto -translate-x-1/2"
           width={400}
           height={200}
           priority
@@ -63,12 +65,13 @@ export default function Dokum() {
       </div>
 
       <DefaultLayout>
-        <div className="z-[3] flex w-full flex-col items-center justify-start text-center px-4 pt-28 sm:pt-40 md:pt-56 lg:pt-40 pb-8 sm:pb-10">
+        {/* Bagian judul */}
+        <div className="z-[3] flex w-full flex-col items-center justify-start text-center px-4 pt-36 sm:pt-44 md:pt-56 lg:pt-40 pb-10">
           <div className="animate-fadeInDown">
-            <h1 className="page-title m-0 p-0 text-[clamp(1.75rem,7vw,5.25rem)] leading-none font-[Firlest] lowercase">
+            <h1 className="page-title m-0 p-0 text-3xl sm:text-3xl md:text-[64px] lg:text-[84px] leading-none font-[Firlest] lowercase">
               dokumentasi
             </h1>
-            <h1 className="page-title m-0 p-0 text-[clamp(1.75rem,7vw,5.25rem)] leading-none font-[Firlest] lowercase mt-2">
+            <h1 className="page-title m-0 p-0 text-3xl sm:text-3xl md:text-[64px] lg:text-[84px] leading-none font-[Firlest] lowercase mt-2">
               pionir kesatria 2026
             </h1>
           </div>
@@ -83,7 +86,7 @@ export default function Dokum() {
         <Image
           src="/dokumentasi/Dekor.svg"
           alt=""
-          className="w-[10vw] sm:w-[8vw] md:w-[6vw]"
+          className="w-[6vw]"
           width={100}
           height={100}
         />
