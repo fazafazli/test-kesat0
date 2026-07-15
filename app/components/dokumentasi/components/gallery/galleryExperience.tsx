@@ -20,7 +20,7 @@ export default function GalleryExperience() {
 
   useLayoutEffect(() => {
     let cancelled = false;
-    let ro: ResizeObserver | null = null;
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const ctx = gsap.context(() => {
       if (
@@ -40,7 +40,6 @@ export default function GalleryExperience() {
           opacity: hidden ? 0 : 1,
           duration: 0.4,
           ease: "power2.out",
-          overwrite: "auto",
         });
 
       ScrollTrigger.create({
@@ -54,38 +53,6 @@ export default function GalleryExperience() {
         onLeaveBack: () => setNavbarHidden(false),
       });
 
-      const waitForWindowLoad = () =>
-        new Promise<void>((resolve) => {
-          if (document.readyState === "complete") {
-            resolve();
-          } else {
-            window.addEventListener("load", () => resolve(), { once: true });
-          }
-        });
-
-      const waitForImages = () =>
-        new Promise<void>((resolve) => {
-          if (!triggerRef.current) {
-            resolve();
-            return;
-          }
-          const imgEls = triggerRef.current.querySelectorAll("img");
-          const pending = Array.from(imgEls).filter((img) => !img.complete);
-          if (pending.length === 0) {
-            resolve();
-            return;
-          }
-          let remaining = pending.length;
-          const onSettle = () => {
-            remaining -= 1;
-            if (remaining <= 0) resolve();
-          };
-          pending.forEach((img) => {
-            img.addEventListener("load", onSettle, { once: true });
-            img.addEventListener("error", onSettle, { once: true });
-          });
-        });
-
       createGalleryTimeline(
         triggerRef.current,
         stickyRef.current,
@@ -95,32 +62,26 @@ export default function GalleryExperience() {
         imageRefs.current
       );
 
-      Promise.all([waitForImages(), waitForWindowLoad()]).then(() => {
-        if (cancelled) return;
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            if (!cancelled) ScrollTrigger.refresh();
-          });
-        });
-      });
-
-      let resizeRefreshCount = 0;
-      let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
-      ro = new ResizeObserver(() => {
-        if (cancelled || resizeRefreshCount >= 5) return;
+      const handleViewportChange = () => {
         if (resizeTimeout) clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
           if (cancelled) return;
-          resizeRefreshCount += 1;
           ScrollTrigger.refresh();
-        }, 150);
-      });
-      if (triggerRef.current) ro.observe(triggerRef.current);
+        }, 180);
+      };
+
+      window.addEventListener("orientationchange", handleViewportChange);
+      window.addEventListener("resize", handleViewportChange);
+
+      return () => {
+        window.removeEventListener("orientationchange", handleViewportChange);
+        window.removeEventListener("resize", handleViewportChange);
+      };
     });
 
     return () => {
       cancelled = true;
-      if (ro) ro.disconnect();
+      if (resizeTimeout) clearTimeout(resizeTimeout);
       ctx.revert();
     };
   }, []);
@@ -152,15 +113,15 @@ export default function GalleryExperience() {
 
           <div
             ref={titleRef}
-            className="absolute z-50 flex flex-col items-center justify-center"
+            className="absolute z-50 flex flex-col items-center justify-center px-4"
           >
-            <div className="relative bg-white border-[6px] border-[#E8920D] rounded-[2.5rem] py-6 px-10 md:py-8 md:px-16 shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
-              <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
+            <div className="relative bg-white border-[4px] sm:border-[6px] border-[#E8920D] rounded-[1.5rem] sm:rounded-[2.5rem] py-[clamp(1rem,4vw,2rem)] px-[clamp(1.25rem,6vw,4rem)] shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
+              <h2 className="relative z-10 text-[clamp(1.1rem,5vw,2.5rem)] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm whitespace-nowrap">
                 PIONIR KESATRIA<br />2025
               </h2>
 
               <div
-                className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin pointer-events-none"
+                className="absolute -bottom-6 -right-6 sm:-bottom-12 sm:-right-12 w-[clamp(50px,14vw,200px)] h-[clamp(50px,14vw,200px)] md:-bottom-[80px] md:-right-[80px] -z-10 animate-spin pointer-events-none"
                 style={{ animationDuration: "10s" }}
               >
                 <Image
@@ -176,15 +137,15 @@ export default function GalleryExperience() {
 
           <div
             ref={endingRef}
-            className="absolute z-50 flex flex-col items-center justify-center"
+            className="absolute z-50 flex flex-col items-center justify-center px-4"
           >
-            <div className="relative bg-white border-[6px] border-[#E8920D] rounded-[2.5rem] py-6 px-10 md:py-8 md:px-16 shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
-              <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
+            <div className="relative bg-white border-[4px] sm:border-[6px] border-[#E8920D] rounded-[1.5rem] sm:rounded-[2.5rem] py-[clamp(1rem,4vw,2rem)] px-[clamp(1.25rem,6vw,4rem)] shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
+              <h2 className="relative z-10 text-[clamp(1rem,4.4vw,2.5rem)] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
                 PIONIR KESATRIA 2026<br />Coming Soon
               </h2>
 
               <div
-                className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin pointer-events-none"
+                className="absolute -bottom-6 -right-6 sm:-bottom-12 sm:-right-12 w-[clamp(50px,14vw,200px)] h-[clamp(50px,14vw,200px)] md:-bottom-[80px] md:-right-[80px] -z-10 animate-spin pointer-events-none"
                 style={{ animationDuration: "10s" }}
               >
                 <Image
