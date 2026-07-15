@@ -32,6 +32,7 @@ const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
             priority={priority}
             loading={loading}
             quality={75}
+            unoptimized
             className="object-cover w-full h-full pointer-events-none" 
           />
         </div>
