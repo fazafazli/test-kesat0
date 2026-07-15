@@ -53,58 +53,68 @@ export const createGalleryTimeline = (
         isWideAspect: boolean;
       };
 
-      // --- Unified scale strategy (width AND height aware) ---
-      // The collage's finalTransform values mix vw (horizontal spread) and
-      // vh (vertical spread). Because spacing between rows is defined in
-      // vh, ANY viewport where height is the more constrained dimension —
-      // which includes ordinary desktop/laptop screens (1920x1080,
-      // 1366x768, etc. are all wider than tall) — will pack rows closer
-      // together in absolute pixels than a portrait phone does. The
-      // previous REFERENCE_HEIGHT of 1000 was higher than most real
-      // viewports (browser chrome eats ~80-150px, so a 1080px display often
-      // reports ~900-950px innerHeight), which meant this scale rarely
-      // engaged for ordinary wide screens — exactly where the overlap was
-      // reported. Lowering the reference to a realistic laptop viewport
-      // height and giving height double the weight of width fixes this:
-      // wide-but-not-super-tall screens now reliably scale down.
+      // --- Vertical compression + scale strategy ---
+      // The previous approach only shrank the IMAGES (mScale) while leaving
+      // their vh-based positions untouched. That's not enough: at 1440x800
+      // the position spread alone (roughly -46vh to +27vh, ~73vh total)
+      // already needs ~584px of the 800px viewport just for image CENTERS,
+      // before accounting for each image's own rendered height. Shrinking
+      // the images a little did nothing to fix that — the positions
+      // themselves were still spread too far apart for the available
+      // vertical space.
+      //
+      // Fix: compute a vCompress factor from how the viewport's actual
+      // height compares to a reference "comfortable" height, and multiply
+      // every image's Y position (in vh) by it. This proportionally pulls
+      // every row toward the vertical center, shrinking the *footprint* of
+      // the collage, not just the images inside it. Image scale (mScale)
+      // is now a secondary, gentler adjustment layered on top.
       const REFERENCE_WIDTH = 1920;
-      const REFERENCE_HEIGHT = 800; // realistic laptop viewport height, not display height
-      const MIN_SCALE = 0.5;
-      const MAX_SCALE = 1;
+      const REFERENCE_HEIGHT = 900;
 
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-
-      const widthFactor = vw / REFERENCE_WIDTH;
-      const heightFactor = vh / REFERENCE_HEIGHT;
-
-      // Height is weighted more heavily than width because the collage's
-      // vertical spacing (vh-based) is what actually collides when a
-      // screen is wide but not tall — a wide screen with normal height is
-      // fine, but height is the dimension that must shrink the layout when
-      // it's the constraining one.
-      const geometryScale = Math.min(
-        MAX_SCALE,
-        Math.max(MIN_SCALE, Math.min(widthFactor, heightFactor * 1.0))
-      );
-
-      // Additionally: explicitly detect "wide aspect ratio" (width clearly
-      // exceeds height, e.g. > 1.6:1) and apply an extra trim on top of the
-      // geometry scale. This directly targets the reported bug — landscape
-      // desktops/laptops/tablets where width > height by a good margin —
-      // independent of absolute pixel size.
       const aspectRatio = vw / vh;
-      const wideAspectTrim = aspectRatio > 1.6 ? 0.85 : 1;
 
-      // Device-class still applies its own extra trim on top, since phones
-      // in portrait need noticeably denser packing regardless of geometry
-      // math (touch targets, single-column reading flow, etc).
-      const deviceTrim = isMobile ? 0.82 : isTablet ? 0.85 : 1;
-
-      const mScale = Math.max(
-        MIN_SCALE,
-        geometryScale * deviceTrim * wideAspectTrim
+      // vCompress: how much to pull Y positions toward center.
+      // At vh >= REFERENCE_HEIGHT, no compression needed (1.0).
+      // As vh shrinks, compression strengthens — floor at 0.45 so rows
+      // never fully collapse into each other even on very short viewports.
+      const MIN_V_COMPRESS = 0.45;
+      const vCompress = Math.min(
+        1,
+        Math.max(MIN_V_COMPRESS, vh / REFERENCE_HEIGHT)
       );
+
+      // mScale: gentler image-size adjustment, mostly driven by width now
+      // that vCompress handles the height/overlap problem directly.
+      const MIN_SCALE = 0.55;
+      const MAX_SCALE = 1;
+      const widthFactor = vw / REFERENCE_WIDTH;
+      const deviceTrim = isMobile ? 0.82 : isTablet ? 0.88 : 1;
+      const mScale = Math.min(
+        MAX_SCALE,
+        Math.max(MIN_SCALE, widthFactor * deviceTrim)
+      );
+
+      // Extra safety net: when aspect ratio is clearly landscape-wide
+      // (> 1.6) AND height is short, tighten vCompress a bit further —
+      // covers ultra-wide monitors that might not trip the vh reference
+      // alone.
+      const wideAspectExtra =
+        aspectRatio > 1.6 && vh < REFERENCE_HEIGHT ? 0.9 : 1;
+      const finalVCompress = Math.max(
+        MIN_V_COMPRESS,
+        vCompress * wideAspectExtra
+      );
+
+      // Helper: scales a "-46vh" / "27vh" style string toward the vertical
+      // center by the compression factor.
+      const compressY = (value: string, factor: number): string => {
+        const num = parseFloat(value);
+        if (Number.isNaN(num)) return value;
+        return `${num * factor}vh`;
+      };
 
       tl.clear();
 
@@ -139,7 +149,7 @@ export const createGalleryTimeline = (
 
         gsap.set(img, {
           x: data.initialTransform.x,
-          y: data.initialTransform.y,
+          y: compressY(data.initialTransform.y, finalVCompress),
           scale: data.initialTransform.scale * mScale,
           rotation: data.initialTransform.rotation,
           opacity: 0,
@@ -187,12 +197,27 @@ export const createGalleryTimeline = (
             ? `${-22 + xOffsets[safeIndex]}vw`
             : `${22 + xOffsets[safeIndex]}vw`;
 
-          targetY = `${-33 + rowNumber * 13.5 + yOffsets[safeIndex]}vh`;
+          // Mobile's Y formula is already hand-packed for portrait phones,
+          // but still needs compression for landscape rotation (a rotated
+          // phone is short + wide, same problem as a wide desktop).
+          const rawMobileY = -33 + rowNumber * 13.5 + yOffsets[safeIndex];
+          targetY = `${rawMobileY * finalVCompress}vh`;
 
           targetRotation = rotations[safeIndex];
           targetScale = targetScale * scaleMods[safeIndex];
         } else if (isTablet) {
-          targetY = `${parseFloat(data.finalTransform.y) * 0.8}vh`;
+          targetY = compressY(
+            `${parseFloat(data.finalTransform.y) * 0.8}vh`,
+            finalVCompress
+          );
+        } else {
+          // Desktop: this is the case from the reported screenshot
+          // (1440x800). Apply vertical compression directly to the
+          // authored finalTransform.y so the whole collage's vertical
+          // footprint shrinks to fit the available height, instead of
+          // only shrinking the images while leaving them spread across
+          // a vh range that doesn't fit.
+          targetY = compressY(data.finalTransform.y, finalVCompress);
         }
 
         tl.to(
