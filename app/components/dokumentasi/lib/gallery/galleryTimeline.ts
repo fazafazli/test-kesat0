@@ -121,8 +121,8 @@ export const createGalleryTimeline = (
         targetX = isLeftColumn ? `${-20 + xOffsets[safeIndex]}vw` : `${20 + xOffsets[safeIndex]}vw`;
         
         // Increased row gap from 11vh to 12.5vh for just a little more vertical space
-        // Shifted starting position to -32vh to keep it perfectly centered
-        targetY = `${-32 + (rowNumber * 12.5) + yOffsets[safeIndex]}vh`;
+        // Shifted starting position up to balance between too-low and too-high
+        targetY = `${-44 + (rowNumber * 12.5) + yOffsets[safeIndex]}vh`;
         
         // Apply our carefully curated rotation and size shifts
         targetRotation = rotations[safeIndex];
