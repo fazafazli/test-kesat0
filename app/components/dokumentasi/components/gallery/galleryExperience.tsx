@@ -8,26 +8,21 @@ import GalleryItem from "./GalleryItem";
 import { galleryData } from "../../lib/gallery/galleryData";
 import { createGalleryTimeline } from "../../lib/gallery/galleryTimeline";
 
-// Register the ScrollTrigger plugin for Next.js
 gsap.registerPlugin(ScrollTrigger);
 
 export default function GalleryExperience() {
-  // Setup Refs for GSAP
   const triggerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const endingRef = useRef<HTMLDivElement>(null);
-  // React 19 standard way to handle an array of refs
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
     let cancelled = false;
     let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
-    // gsap.context handles cleanup automatically for React
     const ctx = gsap.context(() => {
-      // Ensure all elements exist before animating
       if (
         !triggerRef.current ||
         !stickyRef.current ||
@@ -59,7 +54,6 @@ export default function GalleryExperience() {
         onLeaveBack: () => setNavbarHidden(false),
       });
 
-      // Initialize the timeline from our dedicated logic file
       createGalleryTimeline(
         triggerRef.current,
         stickyRef.current,
@@ -69,8 +63,6 @@ export default function GalleryExperience() {
         imageRefs.current
       );
 
-      // Debounced refresh on resize/orientation change so vw/vh-based
-      // transforms stay correct instead of getting stuck with stale values.
       const handleViewportChange = () => {
         if (resizeTimeout) clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
@@ -91,26 +83,20 @@ export default function GalleryExperience() {
     return () => {
       cancelled = true;
       if (resizeTimeout) clearTimeout(resizeTimeout);
-      ctx.revert(); // Revert on unmount
+      ctx.revert();
     };
   }, []);
 
   return (
     <div ref={triggerRef} className="relative h-full w-full">
-      {/* Changed from 'sticky' to 'relative' because GSAP now perfectly pins this to the viewport */}
       <div
         ref={stickyRef}
         className="relative top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden"
       >
-        {/* Global wrapper that handles the slow continuous scaling of the entire collage */}
         <div
           ref={wrapperRef}
           className="relative flex h-full w-full items-center justify-center"
         >
-          {/* 1. Render all images hidden/blurred underneath the title.
-              Only the first 2 are eager/priority; the rest lazy-load so the
-              browser isn't fetching + decoding 12 full images at once on
-              first paint (this was a major contributor to jank). */}
           {galleryData.map((img, i) => (
             <GalleryItem
               key={img.id}
@@ -126,7 +112,6 @@ export default function GalleryExperience() {
             />
           ))}
 
-          {/* 2. Central Yellow Bordered Title Frame */}
           <div
             ref={titleRef}
             className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
@@ -135,7 +120,7 @@ export default function GalleryExperience() {
               <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
                 PIONIR KESATRIA<br />2025
               </h2>
-              
+
               <div className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin"
                    style={{ animationDuration: '10s' }}>
                 <Image
@@ -149,7 +134,6 @@ export default function GalleryExperience() {
             </div>
           </div>
 
-
           <div
             ref={endingRef}
             className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
@@ -158,7 +142,7 @@ export default function GalleryExperience() {
               <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
                 PIONIR KESATRIA 2026<br />Coming Soon
               </h2>
-              
+
               <div className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin"
                    style={{ animationDuration: '10s' }}>
                 <Image

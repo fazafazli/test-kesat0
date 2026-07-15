@@ -43,7 +43,4 @@ const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
 
 GalleryItem.displayName = "GalleryItem";
 
-// Memoized: props never change after mount, so re-renders triggered by
-// parent state updates elsewhere are wasted work otherwise -- this was a
-// contributor to scroll jank alongside eagerly loading every image.
 export default memo(GalleryItem);
