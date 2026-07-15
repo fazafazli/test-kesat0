@@ -68,12 +68,12 @@ export default function GalleryExperience() {
       {/* Changed from 'sticky' to 'relative' because GSAP now perfectly pins this to the viewport */}
       <div
         ref={stickyRef}
-        className="relative top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden"
+        className="relative top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden will-change-transform"
       >
         {/* Global wrapper that handles the slow continuous scaling of the entire collage */}
         <div
           ref={wrapperRef}
-          className="relative flex h-full w-full items-center justify-center"
+          className="relative flex h-full w-full items-center justify-center will-change-transform"
         >
           {/* 1. Render all images hidden/blurred underneath the title */}
           {galleryData.map((img, i) => (

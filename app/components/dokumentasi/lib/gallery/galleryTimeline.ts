@@ -40,8 +40,8 @@ export const createGalleryTimeline = (
     tl.clear();
 
     // --- 1. Setup Initial States ---
-    gsap.set(titleRef, { scale: 1, opacity: 1, filter: "blur(0px)"});
-    gsap.set(endingRef, { opacity: 0, scale: 1, filter: "blur(0px)" });
+    gsap.set(titleRef, { scale: 1, opacity: 1 });
+    gsap.set(endingRef, { opacity: 0, scale: 1 });
     
     const validImageRefs = imageRefs.filter((ref): ref is HTMLDivElement => ref !== null);
 
@@ -52,10 +52,9 @@ export const createGalleryTimeline = (
       gsap.set(img, {
         x: data.initialTransform.x,
         y: data.initialTransform.y,
-        scale: data.initialTransform.scale * mScale, // Apply dynamic scale
+        scale: data.initialTransform.scale * mScale,
         rotation: data.initialTransform.rotation,
         opacity: 0,
-        filter: "blur(10px)",
         force3D: true
       });
     });
@@ -66,7 +65,6 @@ export const createGalleryTimeline = (
       {
         scale: 0.4,
         opacity: 0,
-        filter: "blur(10px)",
         duration: 1.5,
         ease: "power2.inOut",
       },
@@ -122,7 +120,6 @@ export const createGalleryTimeline = (
           scale: targetScale, 
           rotation: targetRotation,
           opacity: 1,
-          filter: "blur(0px)",
           duration: 2.5,
           force3D: true,
           ease: "power3.out", 
@@ -159,7 +156,6 @@ export const createGalleryTimeline = (
       {
         opacity: 1,
         scale: 1,
-        filter: "blur(0px)",
         duration: 1.5,
         ease: "power2.inOut",
       },
