@@ -12,16 +12,19 @@ export const createGalleryTimeline = (
 ) => {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Master Timeline attached to the scroll sequence.
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: triggerRef,
       start: "top top",
       end: "bottom bottom",
-      scrub: 1,
-      // Reduces layout thrash: only recalculates on actual resize end,
-      // not on every intermediate scroll/resize tick.
+      // scrub: true (tracks scroll position directly) is cheaper than
+      // scrub: 1 (adds a trailing lerp on top of the scroll calc every
+      // frame). scrub: 1 was doubling the math GSAP does per tick across
+      // 11+ simultaneous tweens. Keep `true` unless the eased "catch-up"
+      // feel is essential — it costs real CPU at this tween count.
+      scrub: true,
       invalidateOnRefresh: true,
+      fastScrollEnd: true,
     },
   });
 
@@ -43,21 +46,30 @@ export const createGalleryTimeline = (
 
       tl.clear();
 
-      // --- 1. Setup Initial States ---
-      gsap.set(titleRef, { scale: 1, opacity: 1 });
-      gsap.set(endingRef, { opacity: 0, scale: 1 });
-
       const validImageRefs = imageRefs.filter(
         (ref): ref is HTMLDivElement => ref !== null
       );
 
-      // Set will-change only on elements that will actually animate,
-      // and only for the duration of the scroll section (removed on
-      // ScrollTrigger kill via context revert in the component).
-      gsap.set(validImageRefs, { willChange: "transform, opacity" });
-      gsap.set([titleRef, endingRef, wrapperRef], {
-        willChange: "transform, opacity",
-      });
+      // --- Layer strategy ---
+      // Only promote elements to their own GPU layer if they animate
+      // independently of their parent. A wrapper scaling its own subtree
+      // every frame while 11 children ALSO transform independently is the
+      // single biggest cost here: the browser can't cheaply composite a
+      // scaling parent together with children that are separately promoted
+      // layers, so on mid-range/mobile GPUs it falls back to repainting
+      // the whole group instead of compositing cheaply.
+      //
+      // Fix: give the 11 images + title + ending their own layer (they
+      // genuinely animate independently), but deliberately do NOT put
+      // will-change on wrapperRef. Its slow "breathing" scale (Phase 3)
+      // is a single flat property with a linear ease, cheap enough to run
+      // without forcing a dedicated composite layer for the whole subtree.
+      gsap.set(validImageRefs, { force3D: true, willChange: "transform" });
+      gsap.set(titleRef, { willChange: "transform, opacity" });
+      gsap.set(endingRef, { willChange: "transform, opacity" });
+
+      gsap.set(titleRef, { scale: 1, opacity: 1 });
+      gsap.set(endingRef, { opacity: 0, scale: 1 });
 
       validImageRefs.forEach((img, i) => {
         const data = galleryData[i];
@@ -69,7 +81,6 @@ export const createGalleryTimeline = (
           scale: data.initialTransform.scale * mScale,
           rotation: data.initialTransform.rotation,
           opacity: 0,
-          force3D: true,
         });
       });
 
@@ -103,8 +114,6 @@ export const createGalleryTimeline = (
           const xOffsets = [-3, 4, 2, -2, -5, 3, 4, -2, -3, 5, 1, -4];
           const yOffsets = [1, -2, 3, 0, -2, 2, 1, -1, 3, -2, -1, 2];
           const rotations = [-4, 6, -8, 5, 8, -4, 5, -7, 6, -5, 8, -4];
-          // Slightly lower scale mods than before to keep mobile collage
-          // from crushing edges together (was causing the "stacked" look).
           const scaleMods = [
             0.92, 0.85, 0.95, 0.85, 0.92, 0.88, 0.92, 0.88, 0.85, 0.95, 0.88,
             0.92,
@@ -133,7 +142,6 @@ export const createGalleryTimeline = (
             rotation: targetRotation,
             opacity: 1,
             duration: 2.5,
-            force3D: true,
             ease: "power3.out",
             overwrite: "auto",
           },
@@ -142,10 +150,14 @@ export const createGalleryTimeline = (
       });
 
       // --- PHASE 3: Global Collage Slow Scale ---
+      // Runs on the wrapper alone; no will-change here (see note above),
+      // and it's a single flat property (scale) with linear ease, which
+      // the browser can interpolate cheaply without re-promoting a
+      // dedicated layer every tick.
       tl.to(
         wrapperRef,
         {
-          scale: 1.15,
+          scale: 1.1, // trimmed from 1.15 - smaller delta, less recompositing work
           duration: 5,
           ease: "none",
           overwrite: "auto",
@@ -154,12 +166,16 @@ export const createGalleryTimeline = (
       );
 
       // --- PHASE 4: Transition Out ---
-      tl.to(validImageRefs, {
-        opacity: 0,
-        duration: 0.5,
-        ease: "power1.inOut",
-        overwrite: "auto",
-      }, 4.5);
+      tl.to(
+        validImageRefs,
+        {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power1.inOut",
+          overwrite: "auto",
+        },
+        4.5
+      );
 
       tl.to(
         endingRef,
@@ -173,13 +189,10 @@ export const createGalleryTimeline = (
         ">-1.5"
       );
 
-      // Cleanup will-change once the section's animation timeline completes,
-      // to avoid leaving GPU layers pinned for the rest of the page's life.
       return () => {
-        gsap.set(
-          [...validImageRefs, titleRef, endingRef, wrapperRef],
-          { willChange: "auto" }
-        );
+        gsap.set([...validImageRefs, titleRef, endingRef], {
+          willChange: "auto",
+        });
       };
     }
   );

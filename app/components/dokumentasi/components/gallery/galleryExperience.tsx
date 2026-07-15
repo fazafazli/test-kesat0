@@ -71,11 +71,20 @@ export default function GalleryExperience() {
     <div ref={triggerRef} className="relative h-full w-full">
       <div
         ref={stickyRef}
-        className="relative top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden will-change-transform"
+        // stickyRef is pinned by ScrollTrigger's `pin` option, which GSAP
+        // implements by fixing position via the wrapper it creates — this
+        // element itself never receives a transform tween, so promoting it
+        // achieves nothing but reserves a compositor layer for nothing.
+        className="relative top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden"
       >
         <div
           ref={wrapperRef}
-          className="relative flex h-full w-full items-center justify-center will-change-transform"
+          // Deliberately no will-change here — see the layer-strategy note
+          // in galleryTimeline.ts. This element hosts 11 independently
+          // animating children; giving it its own promoted layer too is
+          // what was causing the browser to fall back to repainting the
+          // whole group instead of compositing cheaply.
+          className="relative flex h-full w-full items-center justify-center"
         >
           {galleryData.map((img, i) => (
             <GalleryItem
