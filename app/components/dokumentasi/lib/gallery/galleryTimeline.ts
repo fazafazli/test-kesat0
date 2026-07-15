@@ -107,7 +107,7 @@ export const createGalleryTimeline = (
             ? `${-20 + xOffsets[safeIndex]}vw`
             : `${20 + xOffsets[safeIndex]}vw`;
 
-          targetY = `${-44 + rowNumber * 12.5 + yOffsets[safeIndex]}vh`;
+          targetY = `${-32 + rowNumber * 12.5 + yOffsets[safeIndex]}vh`;
 
           targetRotation = rotations[safeIndex];
           targetScale = targetScale * scaleMods[safeIndex];
