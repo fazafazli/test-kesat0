@@ -17,9 +17,8 @@ export const createGalleryTimeline = (
       trigger: triggerRef,
       start: "top top",
       end: "bottom bottom",
-      scrub: true,
+      scrub: 1,
       invalidateOnRefresh: true,
-      fastScrollEnd: true,
     },
   });
 
@@ -31,65 +30,36 @@ export const createGalleryTimeline = (
       isDesktop: "(min-width: 1025px)",
       isTablet: "(min-width: 768px) and (max-width: 1024px)",
       isMobile: "(max-width: 767px)",
-      isWideAspect: "(min-aspect-ratio: 1.6)",
     },
     (context) => {
       const { isMobile, isTablet } = context.conditions as {
         isMobile: boolean;
         isTablet: boolean;
-        isDesktop: boolean;
-        isWideAspect: boolean;
       };
 
-      const REFERENCE_WIDTH = 1600;
-      const REFERENCE_HEIGHT = 780;
-
-      const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const aspectRatio = vw / vh;
 
-      const MIN_V_COMPRESS = 0.62;
+      const mScale = isMobile ? 1.15 : isTablet ? 0.85 : 1;
+
+      const REFERENCE_HEIGHT = 800;
+      const MIN_V_COMPRESS = 0.72;
       const vCompress = Math.min(
         1,
         Math.max(MIN_V_COMPRESS, vh / REFERENCE_HEIGHT)
       );
 
-      const MIN_SCALE = 0.78;
-      const MAX_SCALE = 1.15;
-      const widthFactor = vw / REFERENCE_WIDTH;
-      const deviceTrim = isMobile ? 0.95 : isTablet ? 1 : 1;
-      const mScale = Math.min(
-        MAX_SCALE,
-        Math.max(MIN_SCALE, widthFactor * deviceTrim)
-      );
-
-      const wideAspectExtra =
-        aspectRatio > 1.6 && vh < REFERENCE_HEIGHT ? 0.94 : 1;
-      const finalVCompress = Math.max(
-        MIN_V_COMPRESS,
-        vCompress * wideAspectExtra
-      );
-
-      const compressY = (value: string, factor: number): string => {
-        const num = parseFloat(value);
-        if (Number.isNaN(num)) return value;
-        return `${num * factor}vh`;
-      };
+      const desktopYShift = isMobile ? 0 : isTablet ? 6 : 9;
 
       tl.clear();
       idleTweens.forEach((t) => t.kill());
       idleTweens.length = 0;
 
+      gsap.set(titleRef, { scale: 1, opacity: 1, filter: "blur(0px)" });
+      gsap.set(endingRef, { opacity: 0, scale: 1, filter: "blur(0px)" });
+
       const validImageRefs = imageRefs.filter(
         (ref): ref is HTMLDivElement => ref !== null
       );
-
-      gsap.set(validImageRefs, { force3D: true, willChange: "transform" });
-      gsap.set(titleRef, { willChange: "transform, opacity" });
-      gsap.set(endingRef, { willChange: "transform, opacity" });
-
-      gsap.set(titleRef, { scale: 1, opacity: 1 });
-      gsap.set(endingRef, { opacity: 0, scale: 1 });
 
       validImageRefs.forEach((img, i) => {
         const data = galleryData[i];
@@ -97,10 +67,12 @@ export const createGalleryTimeline = (
 
         gsap.set(img, {
           x: data.initialTransform.x,
-          y: compressY(data.initialTransform.y, finalVCompress),
+          y: data.initialTransform.y,
           scale: data.initialTransform.scale * mScale,
           rotation: data.initialTransform.rotation,
           opacity: 0,
+          filter: "blur(10px)",
+          force3D: true,
         });
       });
 
@@ -109,9 +81,9 @@ export const createGalleryTimeline = (
         {
           scale: 0.4,
           opacity: 0,
+          filter: "blur(10px)",
           duration: 1.5,
           ease: "power2.inOut",
-          overwrite: "auto",
         },
         0
       );
@@ -133,27 +105,23 @@ export const createGalleryTimeline = (
           const yOffsets = [1, -2, 3, 0, -2, 2, 1, -1, 3, -2, -1, 2];
           const rotations = [-4, 6, -8, 5, 8, -4, 5, -7, 6, -5, 8, -4];
           const scaleMods = [
-            1, 0.94, 1.02, 0.94, 1, 0.96, 1, 0.96, 0.94, 1.02, 0.96, 1,
+            1.0, 0.9, 1.05, 0.9, 1.0, 0.95, 1.0, 0.95, 0.9, 1.05, 0.95, 1.0,
           ];
 
           const safeIndex = i % 12;
 
           targetX = isLeftColumn
-            ? `${-26 + xOffsets[safeIndex]}vw`
-            : `${26 + xOffsets[safeIndex]}vw`;
+            ? `${-20 + xOffsets[safeIndex]}vw`
+            : `${20 + xOffsets[safeIndex]}vw`;
 
-          const rawMobileY = -33 + rowNumber * 13.5 + yOffsets[safeIndex];
-          targetY = `${rawMobileY * finalVCompress}vh`;
+          targetY = `${(-32 + rowNumber * 12.5 + yOffsets[safeIndex]) * vCompress}vh`;
 
           targetRotation = rotations[safeIndex];
           targetScale = targetScale * scaleMods[safeIndex];
         } else if (isTablet) {
-          targetY = compressY(
-            `${parseFloat(data.finalTransform.y) * 0.85}vh`,
-            finalVCompress
-          );
+          targetY = `${parseFloat(data.finalTransform.y) * 0.8 * vCompress + desktopYShift}vh`;
         } else {
-          targetY = compressY(data.finalTransform.y, finalVCompress);
+          targetY = `${parseFloat(data.finalTransform.y) * vCompress + desktopYShift}vh`;
         }
 
         tl.to(
@@ -164,15 +132,16 @@ export const createGalleryTimeline = (
             scale: targetScale,
             rotation: targetRotation,
             opacity: 1,
+            filter: "blur(0px)",
             duration: 2.5,
+            force3D: true,
             ease: "power3.out",
-            overwrite: "auto",
           },
           0.1 + i * 0.08
         );
 
         const idleTween = gsap.to(img, {
-          y: `+=${isMobile ? 0.8 : 1.4}vh`,
+          y: `+=${isMobile ? 0.9 : 1.4}vh`,
           rotation: targetRotation + (i % 2 === 0 ? 1.5 : -1.5),
           duration: 2.6 + (i % 4) * 0.4,
           ease: "sine.inOut",
@@ -187,10 +156,9 @@ export const createGalleryTimeline = (
       tl.to(
         wrapperRef,
         {
-          scale: 1.08,
+          scale: 1.15,
           duration: 5,
           ease: "none",
-          overwrite: "auto",
         },
         0
       );
@@ -201,7 +169,6 @@ export const createGalleryTimeline = (
           opacity: 0,
           duration: 0.5,
           ease: "power1.inOut",
-          overwrite: "auto",
         },
         4.5
       );
@@ -211,9 +178,9 @@ export const createGalleryTimeline = (
         {
           opacity: 1,
           scale: 1,
+          filter: "blur(0px)",
           duration: 1.5,
           ease: "power2.inOut",
-          overwrite: "auto",
         },
         ">-1.5"
       );
@@ -230,9 +197,6 @@ export const createGalleryTimeline = (
       return () => {
         idleTweens.forEach((t) => t.kill());
         idleTweens.length = 0;
-        gsap.set([...validImageRefs, titleRef, endingRef], {
-          willChange: "auto",
-        });
       };
     }
   );
