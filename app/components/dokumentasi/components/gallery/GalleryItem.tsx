@@ -7,12 +7,13 @@ interface GalleryItemProps {
   width: number;
   height: number;
   priority?: boolean;
+  loading?: "lazy" | "eager";
   className?: string;
   style?: React.CSSProperties;
 }
 
 const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
-  ({ src, width, height, priority = false, className, style }, ref) => {
+  ({ src, width, height, priority = false, loading, className, style }, ref) => {
     return (
       <div
         ref={ref}
@@ -29,6 +30,7 @@ const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
             width={width}
             height={height}
             priority={priority}
+            loading={loading}
             quality={75}
             className="object-cover w-full h-full pointer-events-none" 
           />

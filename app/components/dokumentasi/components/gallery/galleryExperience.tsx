@@ -86,7 +86,8 @@ export default function GalleryExperience() {
               width={img.width}
               height={img.height}
               style={{ zIndex: img.zIndex }}
-              priority={i < 4} // Preload the first few images to avoid layout shifts
+              priority={i < 4}
+              loading={i >= 4 ? "lazy" : undefined}
             />
           ))}
 
