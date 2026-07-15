@@ -19,6 +19,8 @@ export default function GalleryExperience() {
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
+    let cancelled = false;
+
     const ctx = gsap.context(() => {
       if (
         !triggerRef.current ||
@@ -31,9 +33,6 @@ export default function GalleryExperience() {
         return;
       }
 
-      // Single reusable tween target instead of creating 4 separate
-      // gsap.to() calls (one per callback) — avoids stacking tweens
-      // when the user scrolls back and forth quickly across the boundary.
       const setNavbarHidden = (hidden: boolean) =>
         gsap.to("header, nav, .navbar", {
           yPercent: hidden ? -150 : 0,
@@ -54,6 +53,22 @@ export default function GalleryExperience() {
         onLeaveBack: () => setNavbarHidden(false),
       });
 
+      // --- Fix for "images pile up unstyled, then snap into place later" ---
+      // ScrollTrigger measures this section's pinned start/end distance as
+      // soon as it's created. If the 11 <img> elements haven't finished
+      // loading yet, the browser may still be reflowing the page as each
+      // image resolves its intrinsic size, silently invalidating the
+      // start/end ScrollTrigger already computed. The gsap.set() initial
+      // positions in createGalleryTimeline also only visually "count" once
+      // paint happens — until then you see the raw stacked HTML position
+      // (centered, untransformed), which matches exactly what was reported.
+      //
+      // Fix: build the animation timeline immediately (so there's no visual
+      // gap), but explicitly wait for every gallery <img> to finish loading
+      // (or fail) before calling ScrollTrigger.refresh(). This re-measures
+      // pin start/end against the FINAL, fully-loaded layout, so scroll
+      // math stays correct from the first scroll instead of "fixing itself"
+      // only after images finish loading on their own several tweens later.
       createGalleryTimeline(
         triggerRef.current,
         stickyRef.current,
@@ -62,9 +77,31 @@ export default function GalleryExperience() {
         wrapperRef.current,
         imageRefs.current
       );
+
+      const imgEls = triggerRef.current.querySelectorAll("img");
+      const pending = Array.from(imgEls).filter((img) => !img.complete);
+
+      if (pending.length === 0) {
+        ScrollTrigger.refresh();
+      } else {
+        let remaining = pending.length;
+        const onSettle = () => {
+          remaining -= 1;
+          if (remaining <= 0 && !cancelled) {
+            ScrollTrigger.refresh();
+          }
+        };
+        pending.forEach((img) => {
+          img.addEventListener("load", onSettle, { once: true });
+          img.addEventListener("error", onSettle, { once: true });
+        });
+      }
     });
 
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -106,7 +143,7 @@ export default function GalleryExperience() {
 
           <div
             ref={titleRef}
-            className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
+            className="absolute z-50 flex flex-col items-center justify-center"
           >
             <div className="relative bg-white border-[6px] border-[#E8920D] rounded-[2.5rem] py-6 px-10 md:py-8 md:px-16 shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
               <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
@@ -130,7 +167,7 @@ export default function GalleryExperience() {
 
           <div
             ref={endingRef}
-            className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
+            className="absolute z-50 flex flex-col items-center justify-center"
           >
             <div className="relative bg-white border-[6px] border-[#E8920D] rounded-[2.5rem] py-6 px-10 md:py-8 md:px-16 shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
               <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
