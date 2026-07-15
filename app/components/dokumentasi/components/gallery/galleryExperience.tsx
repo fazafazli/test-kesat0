@@ -8,23 +8,18 @@ import GalleryItem from "./GalleryItem";
 import { galleryData } from "../../lib/gallery/galleryData";
 import { createGalleryTimeline } from "../../lib/gallery/galleryTimeline";
 
-// Register the ScrollTrigger plugin for Next.js
 gsap.registerPlugin(ScrollTrigger);
 
 export default function GalleryExperience() {
-  // Setup Refs for GSAP
   const triggerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const endingRef = useRef<HTMLDivElement>(null);
-  // React 19 standard way to handle an array of refs
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
-    // gsap.context handles cleanup automatically for React
     const ctx = gsap.context(() => {
-      // Ensure all elements exist before animating
       if (
         !triggerRef.current ||
         !stickyRef.current ||
@@ -36,20 +31,29 @@ export default function GalleryExperience() {
         return;
       }
 
+      // Single reusable tween target instead of creating 4 separate
+      // gsap.to() calls (one per callback) — avoids stacking tweens
+      // when the user scrolls back and forth quickly across the boundary.
+      const setNavbarHidden = (hidden: boolean) =>
+        gsap.to("header, nav, .navbar", {
+          yPercent: hidden ? -150 : 0,
+          opacity: hidden ? 0 : 1,
+          duration: 0.4,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+
       ScrollTrigger.create({
         trigger: triggerRef.current,
         pin: stickyRef.current,
         start: "top top",
         end: "bottom bottom",
-        
-        
-        onEnter: () => gsap.to("header, nav, .navbar", { yPercent: -150, opacity: 0, duration: 0.4, ease: "power2.out" }),
-        onLeave: () => gsap.to("header, nav, .navbar", { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" }),
-        onEnterBack: () => gsap.to("header, nav, .navbar", { yPercent: -150, opacity: 0, duration: 0.4, ease: "power2.out" }),
-        onLeaveBack: () => gsap.to("header, nav, .navbar", { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" }),
+        onEnter: () => setNavbarHidden(true),
+        onLeave: () => setNavbarHidden(false),
+        onEnterBack: () => setNavbarHidden(true),
+        onLeaveBack: () => setNavbarHidden(false),
       });
 
-      // Initialize the timeline from our dedicated logic file
       createGalleryTimeline(
         triggerRef.current,
         stickyRef.current,
@@ -60,22 +64,19 @@ export default function GalleryExperience() {
       );
     });
 
-    return () => ctx.revert(); // Revert on unmount
+    return () => ctx.revert();
   }, []);
 
   return (
     <div ref={triggerRef} className="relative h-full w-full">
-      {/* Changed from 'sticky' to 'relative' because GSAP now perfectly pins this to the viewport */}
       <div
         ref={stickyRef}
         className="relative top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden will-change-transform"
       >
-        {/* Global wrapper that handles the slow continuous scaling of the entire collage */}
         <div
           ref={wrapperRef}
           className="relative flex h-full w-full items-center justify-center will-change-transform"
         >
-          {/* 1. Render all images hidden/blurred underneath the title */}
           {galleryData.map((img, i) => (
             <GalleryItem
               key={img.id}
@@ -86,12 +87,14 @@ export default function GalleryExperience() {
               width={img.width}
               height={img.height}
               style={{ zIndex: img.zIndex }}
-              priority={i < 4}
-              loading={i >= 4 ? "lazy" : undefined}
+              // Only the first ~2 images are truly above-the-fold at the
+              // start of the pin; keeping priority at 4 was forcing extra
+              // full-quality eager downloads that competed with the LCP image.
+              priority={i < 2}
+              loading={i >= 2 ? "lazy" : undefined}
             />
           ))}
 
-          {/* 2. Central Yellow Bordered Title Frame */}
           <div
             ref={titleRef}
             className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
@@ -100,9 +103,11 @@ export default function GalleryExperience() {
               <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
                 PIONIR KESATRIA<br />2025
               </h2>
-              
-              <div className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin"
-                   style={{ animationDuration: '10s' }}>
+
+              <div
+                className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin pointer-events-none"
+                style={{ animationDuration: "10s" }}
+              >
                 <Image
                   src="/dokumentasi/GEAR.svg"
                   alt=""
@@ -114,7 +119,6 @@ export default function GalleryExperience() {
             </div>
           </div>
 
-
           <div
             ref={endingRef}
             className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
@@ -123,9 +127,11 @@ export default function GalleryExperience() {
               <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
                 PIONIR KESATRIA 2026<br />Coming Soon
               </h2>
-              
-              <div className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin"
-                   style={{ animationDuration: '10s' }}>
+
+              <div
+                className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] md:-bottom-[80px] md:-right-[80px] md:w-[200px] md:h-[200px] -z-10 animate-spin pointer-events-none"
+                style={{ animationDuration: "10s" }}
+              >
                 <Image
                   src="/dokumentasi/GEAR.svg"
                   alt=""

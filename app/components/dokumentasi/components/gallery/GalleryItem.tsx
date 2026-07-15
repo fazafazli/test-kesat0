@@ -30,10 +30,15 @@ const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
             width={width}
             height={height}
             priority={priority}
-            loading={loading}
-            quality={75}
-            unoptimized
-            className="object-cover w-full h-full pointer-events-none" 
+            loading={priority ? undefined : loading ?? "lazy"}
+            quality={70}
+            // Next.js now handles resizing/format negotiation (AVIF/WebP) and
+            // serves a size matched to the actual rendered box instead of the
+            // full 80kb source on every device. This was the main cause of
+            // slow initial paint on mobile.
+            sizes="(max-width: 767px) 40vw, (max-width: 1024px) 30vw, 22vw"
+            className="object-cover w-full h-full pointer-events-none select-none"
+            draggable={false}
           />
         </div>
       </div>
