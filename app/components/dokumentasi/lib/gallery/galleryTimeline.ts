@@ -35,14 +35,63 @@ export const createGalleryTimeline = (
       isDesktop: "(min-width: 1025px)",
       isTablet: "(min-width: 768px) and (max-width: 1024px)",
       isMobile: "(max-width: 767px)",
+      // gsap.matchMedia only re-runs this callback when one of these query
+      // strings flips true/false — it does NOT re-run on every resize.
+      // Since mScale below also reacts to window.innerHeight (for landscape
+      // detection), a device rotating from portrait to landscape at a width
+      // that stays within the same isMobile/isTablet bucket would otherwise
+      // never trigger a recompute. This extra query flips whenever the
+      // viewport becomes "short" relative to its width, forcing a re-run
+      // (and therefore a fresh mScale calculation) on rotation.
+      isShortViewport: "(max-aspect-ratio: 1.3) and (max-height: 500px)",
     },
     (context) => {
       const { isMobile, isTablet } = context.conditions as {
         isMobile: boolean;
         isTablet: boolean;
+        isDesktop: boolean;
+        isShortViewport: boolean;
       };
 
-      const mScale = isMobile ? 0.75 : isTablet ? 0.7 : 1;
+      // --- Unified scale strategy (width AND height aware) ---
+      // The collage's finalTransform values mix vw (horizontal spread) and
+      // vh (vertical spread). A width-only breakpoint (previous approach)
+      // handles narrow-but-tall phones fine, but fails for LANDSCAPE
+      // orientations: a rotated phone/tablet can have a "desktop-range"
+      // width (e.g. 900-1100px) while its height is only 400-500px. Vertical
+      // vh-based offsets (-46vh, 22vh, etc.) then occupy a much larger
+      // fraction of the actually-available vertical pixels, so images that
+      // looked fine in portrait collide in landscape even though the width
+      // breakpoint alone looked "safe".
+      //
+      // Fix: compute scale from whichever dimension is more constraining —
+      // width vs a desktop reference, AND height vs a reference "comfortable"
+      // height — and take the smaller (more conservative) of the two. This
+      // naturally scales down short-but-wide landscape viewports without
+      // needing a separate landscape media query to maintain.
+      const REFERENCE_WIDTH = 1920;
+      const REFERENCE_HEIGHT = 1000;
+      const MIN_SCALE = 0.55;
+      const MAX_SCALE = 1;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const widthFactor = vw / REFERENCE_WIDTH;
+      const heightFactor = vh / REFERENCE_HEIGHT;
+
+      // Base scale from viewport geometry alone (pre-device-class trim).
+      const geometryScale = Math.min(
+        MAX_SCALE,
+        Math.max(MIN_SCALE, Math.min(widthFactor, heightFactor))
+      );
+
+      // Device-class still applies its own extra trim on top, since phones
+      // in portrait need noticeably denser packing regardless of geometry
+      // math (touch targets, single-column reading flow, etc).
+      const deviceTrim = isMobile ? 0.82 : isTablet ? 0.85 : 1;
+
+      const mScale = Math.max(MIN_SCALE, geometryScale * deviceTrim);
 
       tl.clear();
 

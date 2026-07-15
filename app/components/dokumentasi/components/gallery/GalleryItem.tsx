@@ -50,6 +50,12 @@ const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
             sizes="(max-width: 767px) 40vw, (max-width: 1024px) 30vw, 22vw"
             className="object-cover w-full h-full pointer-events-none select-none"
             draggable={false}
+            // Hints the browser to decode off the main thread instead of
+            // blocking paint while each of the 11 images decodes — reduces
+            // the "everything freezes for a moment on first open" feel,
+            // since decode work can be spread across frames instead of
+            // forcing a synchronous decode-then-paint for every image.
+            decoding="async"
           />
         </div>
       </div>
