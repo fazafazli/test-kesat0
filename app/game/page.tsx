@@ -1,12 +1,11 @@
-import Navbar from "@/app/components/NavigationBar/Navbar";
-import Game from "@/app/components/game/game";
+import Navbar from "../../src/components/NavigationBar/Navbar";
+import Game from "../../src/modules/game/game";
 
 export default function gamePage() {
   return (
     <>
       <Navbar />
       <Game />
-    </>
-  
+    </> 
 );
 }

@@ -1,5 +1,5 @@
-import Navbar from "@/app/components/NavigationBar/Navbar";
-import FAQ from "@/app/components/faq/faq";
+import Navbar from "../../src/components/NavigationBar/Navbar";
+import FAQ from "../../src/modules/faq/faq";
 
 export default function FAQPage() {
   return (

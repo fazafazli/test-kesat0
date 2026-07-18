@@ -1,5 +1,5 @@
-import Navbar from "@/app/components/NavigationBar/Navbar";
-import PETA from "@/app/components/peta/map";
+import Navbar from "../../src/components/NavigationBar/Navbar";
+import PETA from "../../src/modules/peta/map";
 
 export default function PetaPage() {
   return (
@@ -7,6 +7,5 @@ export default function PetaPage() {
       <Navbar />
       <PETA />
     </>
-  
 );
 }

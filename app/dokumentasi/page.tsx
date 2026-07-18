@@ -1,5 +1,5 @@
-import Navbar from "@/app/components/NavigationBar/Navbar";
-import Dokum from "@/app/components/dokumentasi/dokum";
+import Navbar from "../../src/components/NavigationBar/Navbar";
+import Dokum from "../../src/modules/dokumentasi/dokum";
 
 export default function DokumentasiPage() {
   return (

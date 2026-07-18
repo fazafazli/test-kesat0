@@ -10,17 +10,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-Poppins: var(--font-poppins);
+  --font-Firlest: var(--font-firlest);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
-
-@font-face {
-  font-family: "Firlest";
-  src: url("/fonts/firlest-regular.otf") format("opentype");
 }
 
 @keyframes slideInInverse {
@@ -85,4 +82,58 @@ body {
 
 .animate-fadeInDown {
   animation: fadeInDown 1s ease-out 0.5s forwards;
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+.animate-wiggle {
+  animation: wiggle 4s ease-in-out infinite;
+}
+
+@keyframes wiggleInverse {
+  0%, 100% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+.animate-wiggleInverse {
+  animation: wiggleInverse 4s ease-in-out infinite;
+}
+
+@keyframes nf-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.animate-float {
+  animation: nf-float 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float {
+    animation: none;
+  }
+}
+
+@keyframes wiggleDown {
+  0%, 100% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-wiggleDown {
+  animation: wiggleDown 4s ease-in-out infinite;
 }
