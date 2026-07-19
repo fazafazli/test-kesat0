@@ -5,7 +5,7 @@ import Navbar from "../src/components/NavigationBar/Navbar";
 export default function NotFound() {
   return (
     <div className="relative min-h-dvh w-full bg-[#5e0609] overflow-hidden flex flex-col
-      before:content-[''] before:absolute before:inset-0 before:z-[1] before:pointer-events-none before:bg-[url('/section1/background1.svg')] before:bg-cover before:[background-position:center_5%]
+      before:content-[''] before:absolute before:inset-0 before:z-[1] before:pointer-events-none before:bg-[url('/section1/background1.webp')] before:bg-cover before:[background-position:center_5%]
       after:content-[''] after:absolute after:inset-0 after:z-[2] after:pointer-events-none after:bg-[url('/section1/EfekWelcome.svg')] after:bg-cover after:[background-position:center_top_-50px] after:opacity-40">
 
       <div className="relative z-[50]">
@@ -25,7 +25,7 @@ export default function NotFound() {
             />
             <div className="relative w-[clamp(200px,24vw,380px)] aspect-[873/871] drop-shadow-[0_18px_30px_rgba(0,0,0,0.4)] animate-float">
               <Image
-                src="/section3/TuguSamping.svg"
+                src="/section3/TuguSamping.webp"
                 alt=""
                 fill
                 className="object-contain"

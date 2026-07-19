@@ -92,6 +92,7 @@ export default function Dokum() {
               width={42}
               height={42}
               className="scroll-hint-arrow scroll-hint-arrow-1"
+              unoptimized
             />
             <Image
               src="/dokumentasi/anakPanah.webp"

@@ -28,7 +28,7 @@ export default function Navbar(): JSX.Element {
       <div className="navbar-container">
         {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={handleGoToTop}>
-          <Image src="/section1/LogoKesatria.svg" alt="Logo Pionir Kesatria" width={40} height={40} />
+          <Image src="/section2/logo.webp" alt="Logo Pionir Kesatria" width={46} height={40} />
           <span className="logo-text">PIONIR KESATRIA 2026</span>
         </Link>
 

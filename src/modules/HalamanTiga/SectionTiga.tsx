@@ -5,32 +5,31 @@ import "./SectionTiga.css";
 import Image from "next/image";
 import Link from "next/link";
 import BoxKuning from "../../components/BoxKuning/BoxKuning";
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 export default function SectionTiga() {
-
   useEffect(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show");
-        }
-      });
-    },
-    {
-      threshold: 0.2,
-    }
-  );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          } else {
+            entry.target.classList.remove("show");
+          }
+        });
+      },
+      {
+        threshold: 0.001,
+      },
+    );
 
-  const elements = document.querySelectorAll(".fade-up");
+    const elements = document.querySelectorAll(".fade-up");
 
-  elements.forEach((el) => observer.observe(el));
+    elements.forEach((el) => observer.observe(el));
 
-  return () => observer.disconnect();
-}, []);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="section-tiga">
@@ -48,14 +47,14 @@ export default function SectionTiga() {
         <div className="section-tiga-inner fade-up">
           {/* Awan kecil atas + Sayap */}
           <div className="animate-wiggle">
-          <Image
-            src="./section3/AwanKecilAtas.svg"
-            alt=""
-            aria-hidden="true"
-            width={900}
-            height={900}
-            className="AwanKecilAtas"
-          />
+            <Image
+              src="./section3/AwanKecilAtas.svg"
+              alt=""
+              aria-hidden="true"
+              width={900}
+              height={900}
+              className="AwanKecilAtas"
+            />
           </div>
           <Image
             src="/section3/SayapPertama.svg"
@@ -82,8 +81,8 @@ export default function SectionTiga() {
             branding yang akan menunjukkan pribadi Kesatria Muda di lingkungan
             Fakultas Teknik UGM. Selain modul utama tentang personal branding,
             pada bagian 1 ini juga terdapat 2 video menarik yaitu &quot;Sejarah
-            Teknik&quot; dan &quot;Sejarah Kesatria&quot; yang wajib ditonton sebelum kita
-            bertemu secara offline di Pionir Kesatria nanti.
+            Teknik&quot; dan &quot;Sejarah Kesatria&quot; yang wajib ditonton
+            sebelum kita bertemu secara offline di Pionir Kesatria nanti.
           </p>
           {/* Blok 3 — Box Besar + Paragraf 2 */}
           <div className="BoxBesarWrapper">
@@ -91,7 +90,7 @@ export default function SectionTiga() {
               <div className="Box1Wrapper">
                 <BoxKuning className="box-nala1">
                   <Image
-                    src="/section3/Nala1.svg"
+                    src="/section3/Nala1.webp"
                     alt="Nala 1"
                     width={900}
                     height={900}
@@ -116,7 +115,11 @@ export default function SectionTiga() {
           </div>
           {/* Button 1 */}
           <div className="btn-wrapper">
-            <Link href="https://drive.google.com/file/d/12GmcCEc0uTeOdYaGil7a9AruoMJPKLhj/view?usp=sharing">
+            <Link
+              href="https://drive.google.com/file/d/12GmcCEc0uTeOdYaGil7a9AruoMJPKLhj/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <button className="Button1">
                 <span className="Button1-text">BACA MATERI</span>
               </button>
@@ -198,7 +201,7 @@ export default function SectionTiga() {
               {/* Kiri: Box + Pita */}
               <div className="kolom-box-pita">
                 <Image
-                  src="./section3/AwanSedang3.svg"
+                  src="./section3/AwanSedang1.svg"
                   alt=""
                   aria-hidden="true"
                   width={300}
@@ -207,7 +210,7 @@ export default function SectionTiga() {
                 />
                 <BoxKuning className="box-nala3">
                   <Image
-                    src="/section3/Nala3.svg"
+                    src="/section3/Nala3.webp"
                     alt="Nala 3"
                     width={1000}
                     height={1000}
@@ -240,7 +243,7 @@ export default function SectionTiga() {
                   yang penuh makna, hingga lahirnya simbol-simbol abadi pencetak
                   para insinyur-insyinyur bangsa. Selamat menyaksikan!
                 </p>
-                
+
                 {/* <div className="btn-wrapper btn-wrapper--start">
                   <Link href="https://drive.google.com/file/d/12GmcCEc0uTeOdYaGil7a9AruoMJPKLhj/view?usp=sharing">
                     <button className="Button3">

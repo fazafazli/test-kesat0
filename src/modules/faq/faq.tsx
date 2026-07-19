@@ -65,12 +65,12 @@ export default function FAQ() {
 
       <div className="animate-fadeInDown z-[4] pointer-events-none [animation-fill-mode:forwards] motion-reduce:animate-none">
         <Image
-          src="/section2/kain.svg"
+          src="/section2/kain.webp"
           alt=""
           priority
           className="absolute top-5 left-1/2 -translate-x-1/2 z-[2] w-screen max-w-none h-auto"
           width={1920}
-          height={350}
+          height={383}
         />
       </div>
 
@@ -123,7 +123,7 @@ export default function FAQ() {
 
       <div className="sm:block absolute bottom-[25%] md:bottom-[20%] lg:bottom-[8%] right-[-15vw] z-[0] pointer-events-none animate-wiggleInverse">
         <Image
-          src="/section3/TuguSamping.svg"
+          src="/section3/TuguSamping.webp"
           alt=""
           loading="lazy"
           width={873}

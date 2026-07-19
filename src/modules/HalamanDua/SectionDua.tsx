@@ -63,7 +63,7 @@ export default function SectionDua() {
     <DefaultLayout className="!p-0 !gap-0" aria-label="Selamat Datang Kesatria Muda 2026">
       <div ref={sectionRef} id="section-dua" className="kesatria-section-2" aria-label="Selamat Datang Kesatria Muda 2026">
         <div className="kain-transition-wrapper" aria-hidden="true">
-          <Image src="/section2/kain.svg" alt="" width={1920} height={383} className="block w-full h-auto" unoptimized loading="lazy" />
+          <Image src="/section2/kain.webp" alt="" width={1920} height={383} className="block w-full h-auto" unoptimized loading="lazy" />
         </div>
         <div className="section-dua-inner">
           <div className="bg-pattern-wrapper" aria-hidden="true">

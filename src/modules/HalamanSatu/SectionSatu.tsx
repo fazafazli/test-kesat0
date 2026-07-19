@@ -15,7 +15,7 @@ export default function SectionSatu() {
         className="bg-efek"
       />
       <img
-        src="/section1/background1.svg"
+        src="/section1/background1.webp"
         alt=""
         aria-hidden="true"
         className="bg-main"

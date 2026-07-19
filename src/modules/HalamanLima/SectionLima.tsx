@@ -51,14 +51,14 @@ export default function SectionLima() {
         className="SerpihanDaun2"
       />
       <div className="animate-wiggle">
-      <Image
-        src="./section5/AwanKecil1.svg"
-        alt=""
-        aria-hidden="true"
-        width={200}
-        height={200}
-        className="AwanKecil1"
-      />
+        <Image
+          src="./section5/AwanKecil1.svg"
+          alt=""
+          aria-hidden="true"
+          width={200}
+          height={200}
+          className="AwanKecil1"
+        />
       </div>
 
       <DefaultLayout className="px-0!">
@@ -87,7 +87,11 @@ export default function SectionLima() {
                 jurusan Teknik yang kesatria muda ambil untuk kontribusi mereka
                 bagi bangsa dan negara di masa depan.
               </p>
-              <Link href="https://drive.google.com/file/d/1yCOxfma_nqur0hfTd0SD_-pHxE9n5hRv/view?usp=sharing">
+              <Link
+                href="https://drive.google.com/file/d/1yCOxfma_nqur0hfTd0SD_-pHxE9n5hRv/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="btn-modul">
                   <span className="btn-modul-text">BACA MODUL</span>
                 </button>
@@ -96,7 +100,7 @@ export default function SectionLima() {
             <div className="kolom-box-awan">
               <BoxKuning className="box-nala4">
                 <Image
-                  src="/section5/Nala4.svg"
+                  src="/section5/Nala4.webp"
                   alt="Nala 4"
                   width={1000}
                   height={1000}
@@ -104,14 +108,14 @@ export default function SectionLima() {
                 />
               </BoxKuning>
               <div className="animate-wiggleInverse">
-              <Image
-                src="./section5/AwanKecil2.svg"
-                alt=""
-                aria-hidden="true"
-                width={300}
-                height={300}
-                className="AwanKecil2"
-              />
+                <Image
+                  src="./section5/AwanKecil2.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width={300}
+                  height={300}
+                  className="AwanKecil2"
+                />
               </div>
             </div>
           </div>
@@ -121,7 +125,7 @@ export default function SectionLima() {
             <div className="kolom-box-gear">
               <BoxKuning className="box-nala5">
                 <Image
-                  src="/section5/Nala5.svg"
+                  src="/section5/Nala5.webp"
                   alt="Nala 5"
                   width={1000}
                   height={1000}
@@ -147,7 +151,11 @@ export default function SectionLima() {
                 calon-calon insinyur muda berperan penting dalam pembangunan
                 berkelanjutan dan peningkatan kualitas hidup masyarakat.
               </p>
-              <Link href="https://drive.google.com/file/d/1yCOxfma_nqur0hfTd0SD_-pHxE9n5hRv/view?usp=sharing">
+              <Link
+                href="https://drive.google.com/file/d/1yCOxfma_nqur0hfTd0SD_-pHxE9n5hRv/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="btn-modul">
                   <span className="btn-modul-text">BACA MODUL</span>
                 </button>
@@ -170,14 +178,14 @@ export default function SectionLima() {
       {/*Footer*/}
       <div className="footer-area">
         <Image
-          src="/section5/Footer.svg"
+          src="/dokumentasi/footer.svg"
           alt="Footer"
           className="Footer"
           width={300}
           height={300}
         />
         <Image
-          src="/section5/SignEmas.svg"
+          src="/dokumentasi/SignEmas.webp"
           alt="Sign Emas"
           className="SignEmas"
           width={300}

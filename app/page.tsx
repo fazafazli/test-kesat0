@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar />
       <SiteWithIntro
         birdImageSrc="/intro/bird.svg"
-        logoImageSrc="/section1/LogoKesatria.svg"
+        logoImageSrc="/section2/logo.webp"
         wayangKananAtasSrc="/intro/gunungannew.svg"
         wayangKiriAtasSrc="/intro/gunungannew.svg"
       >

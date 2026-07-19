@@ -202,7 +202,7 @@ export default function SectionEmpat() {
         <div id="bagian-dua" ref={sectionRef} className="bd-section" aria-label="Bagian 2: Lika-liku Kesatria">
           <div className="bd-kain-transition-wrapper" aria-hidden="true">
             <Image
-              src="/section2/kain.svg"
+              src="/section2/kain.webp"
               alt=""
               width={1920}
               height={383}
