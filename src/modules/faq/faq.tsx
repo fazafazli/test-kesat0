@@ -123,7 +123,7 @@ export default function FAQ() {
 
       <div className="sm:block absolute bottom-[25%] md:bottom-[20%] lg:bottom-[8%] right-[-15vw] z-[0] pointer-events-none animate-wiggleInverse">
         <Image
-          src="/section3/TuguSamping.webp"
+          src="/section3/TuguSamping.svg"
           alt=""
           loading="lazy"
           width={873}

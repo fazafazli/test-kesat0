@@ -1,11 +1,5 @@
 "use client";
 
-/* ========================================
-   Game Constants
-   Centralized configuration for the game engine.
-   ======================================== */
-
-/** Canvas dimensions */
 export const CANVAS_WIDTH = 400;
 export const CANVAS_HEIGHT = 600;
 

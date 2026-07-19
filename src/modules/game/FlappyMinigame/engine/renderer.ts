@@ -9,9 +9,6 @@ import {
 } from "../constants/game";
 import type { Bird, PipePair } from "../types/game";
 
-/* ========================================
-   Asset Initialization & Offscreen Caching
-======================================== */
 let bgImg: HTMLImageElement | null = null;
 let nalaImg: HTMLImageElement | null = null;
 let sayapImg: HTMLImageElement | null = null;
@@ -19,13 +16,11 @@ let arrowTopImg: HTMLImageElement | null = null;
 let arrowBottomImg: HTMLImageElement | null = null;
 let cloudImg: HTMLImageElement | null = null;
 
-/* Hardware-accelerated offscreen bitmap cache buffers */
 let bgCache: HTMLCanvasElement | null = null;
 let cloudCache: HTMLCanvasElement | null = null;
 let arrowTopCache: HTMLCanvasElement | null = null;
 let arrowBottomCache: HTMLCanvasElement | null = null;
 
-/** Helper to convert vector SVGs into static hardware bitmaps once */
 const preRenderToCanvas = (
   img: HTMLImageElement,
   width: number,
@@ -42,21 +37,18 @@ const preRenderToCanvas = (
 };
 
 if (typeof window !== "undefined") {
-  // 1. Sky Background Cache
   bgImg = new Image();
   bgImg.src = "/minigame/background.svg";
   bgImg.onload = () => {
     if (bgImg) bgCache = preRenderToCanvas(bgImg, CANVAS_WIDTH, CANVAS_HEIGHT);
   };
 
-  // 2. Mascot Sprites (Rendered directly, lightweight)
   nalaImg = new Image();
   nalaImg.src = "/minigame/nala.svg";
 
   sayapImg = new Image();
   sayapImg.src = "/minigame/sayap.svg";
 
-  // 3. Top Arrow Pipe Cache
   arrowTopImg = new Image();
   arrowTopImg.src = "/minigame/arrowatas.svg";
   arrowTopImg.onload = () => {
@@ -66,7 +58,6 @@ if (typeof window !== "undefined") {
     }
   };
 
-  // 4. Bottom Arrow Pipe Cache
   arrowBottomImg = new Image();
   arrowBottomImg.src = "/minigame/arrowbawah.svg";
   arrowBottomImg.onload = () => {
@@ -76,7 +67,6 @@ if (typeof window !== "undefined") {
     }
   };
 
-  // 5. Scrolling Clouds Cache
   cloudImg = new Image();
   cloudImg.src = "/minigame/awan.svg";
   cloudImg.onload = () => {
@@ -86,11 +76,6 @@ if (typeof window !== "undefined") {
   };
 }
 
-/* ========================================
-   Canvas Renderer
-======================================== */
-
-/** Draw the background using the hardware-accelerated bitmap cache */
 export const drawBackground = (ctx: CanvasRenderingContext2D): void => {
   if (bgCache) {
     ctx.drawImage(bgCache, 0, 0);
@@ -102,14 +87,12 @@ export const drawBackground = (ctx: CanvasRenderingContext2D): void => {
   }
 };
 
-/** Draw all pipe pairs using high-speed offscreen cache draws */
 export const drawPipes = (
   ctx: CanvasRenderingContext2D,
   pipes: PipePair[]
 ): void => {
   for (const pipe of pipes) {
     
-    /* Top pipe ("arrowatas.svg") */
     if (arrowTopCache) {
       ctx.drawImage(
         arrowTopCache,
@@ -124,7 +107,6 @@ export const drawPipes = (
       ctx.fillRect(pipe.x, 0, PIPE.width, pipe.topHeight);
     }
 
-    /* Bottom pipe ("arrowbawah.svg") */
     const bottomY = pipe.topHeight + PIPE.gap;
     
     if (arrowBottomCache) {
@@ -144,7 +126,6 @@ export const drawPipes = (
   }
 };
 
-/** Draw the ground with seamless scrolling clouds from bitmap cache */
 export const drawGround = (
   ctx: CanvasRenderingContext2D,
   offset: number
@@ -161,7 +142,6 @@ export const drawGround = (
   }
 };
 
-/** Draw Nala (the bird) with rotation and wing animation */
 export const drawBird = (
   ctx: CanvasRenderingContext2D,
   bird: Bird,
@@ -205,7 +185,6 @@ export const drawBird = (
   ctx.restore();
 };
 
-/** Draw the current score on screen (HUD) */
 export const drawScore = (
   ctx: CanvasRenderingContext2D,
   score: number
@@ -217,7 +196,6 @@ export const drawScore = (
   ctx.fillText(text, CANVAS_WIDTH / 2, 80);
 };
 
-/** Draw idle state bird floating animation */
 export const drawIdleBird = (
   ctx: CanvasRenderingContext2D,
   frame: number
@@ -234,7 +212,6 @@ export const drawIdleBird = (
   drawBird(ctx, idleBird, frame);
 };
 
-/** Clear the entire canvas */
 export const clearCanvas = (ctx: CanvasRenderingContext2D): void => {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 };

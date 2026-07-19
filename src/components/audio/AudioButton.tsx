@@ -25,7 +25,6 @@ export default function AudioButton() {
       aria-label="Toggle Audio"
     >
       {isPlaying ? (
-        // Speaker aktif
         <svg
           width="28"
           height="28"
@@ -37,7 +36,6 @@ export default function AudioButton() {
           <path d="M18.5 5.5a8.5 8.5 0 010 13"/>
         </svg>
       ) : (
-        // Speaker mute
         <svg
           width="28"
           height="28"

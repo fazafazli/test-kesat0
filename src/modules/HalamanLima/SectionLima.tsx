@@ -33,7 +33,6 @@ export default function SectionLima() {
 
   return (
     <section className="section-lima">
-      {/* Dekorasi absolut */}
       <Image
         src="./section5/SerpihanDaun1.svg"
         alt=""
@@ -63,7 +62,6 @@ export default function SectionLima() {
 
       <DefaultLayout className="px-0!">
         <div className="section-lima-inner fade-up">
-          {/* Blok 1 — Judul + Paragraf Intro */}
           <div className="blok-intro">
             <h2 className="garis-text judul">Bagian 3:</h2>
             <h2 className="garis-text judul">Kesatria Muda Berkarya</h2>
@@ -77,7 +75,6 @@ export default function SectionLima() {
             </p>
           </div>
 
-          {/* Blok 2 — Teks kiri + Box Kuning kanan */}
           <div className="blok-karya">
             <div className="blok-karya-kiri">
               <h2 className="garis-text judul">Kesatria Muda Berkarya</h2>
@@ -120,7 +117,6 @@ export default function SectionLima() {
             </div>
           </div>
 
-          {/* Blok 3 — Box Kuning kiri + Teks kanan */}
           <div className="blok-aplikatif">
             <div className="kolom-box-gear">
               <BoxKuning className="box-nala5">
@@ -163,7 +159,6 @@ export default function SectionLima() {
             </div>
           </div>
 
-          {/* Sayap terakhir */}
           <Image
             src="./section5/SayapTerakhir.svg"
             alt=""
@@ -175,14 +170,13 @@ export default function SectionLima() {
         </div>
       </DefaultLayout>
 
-      {/*Footer*/}
       <div className="footer-area">
         <Image
           src="/dokumentasi/footer.svg"
-          alt="Footer"
+          alt=""
           className="Footer"
-          width={300}
-          height={300}
+          width={500}
+          height={200}
         />
         <Image
           src="/dokumentasi/SignEmas.webp"

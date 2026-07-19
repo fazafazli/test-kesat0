@@ -25,7 +25,7 @@ export default function NotFound() {
             />
             <div className="relative w-[clamp(200px,24vw,380px)] aspect-[873/871] drop-shadow-[0_18px_30px_rgba(0,0,0,0.4)] animate-float">
               <Image
-                src="/section3/TuguSamping.webp"
+                src="/section3/TuguSamping.svg"
                 alt=""
                 fill
                 className="object-contain"

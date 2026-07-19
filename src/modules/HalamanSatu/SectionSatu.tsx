@@ -7,7 +7,6 @@ import "./SectionSatu.css";
 export default function SectionSatu() {
   return (
     <section id="section-satu" className="section-satu">
-      {/* Background images */}
       <img
         src="/section1/EfekWelcome.svg"
         alt=""
@@ -21,7 +20,6 @@ export default function SectionSatu() {
         className="bg-main"
       />
 
-      {/* Teks utama */}
       <DefaultLayout className="py-0! px-0! gap-0! justify-center! items-center! min-h-screen! max-w-none!">
         <div className="teks-wrapper">
           <h1 className="gradient-text teks-sambutan">SELAMAT DATANG</h1>
@@ -30,7 +28,6 @@ export default function SectionSatu() {
         </div>
       </DefaultLayout>
 
-      {/* Dekorasi */}
       <div className="border-awan">
         <Image
           src="/section2/awan.svg"

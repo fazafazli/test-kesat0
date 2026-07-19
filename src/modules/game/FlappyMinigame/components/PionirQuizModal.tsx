@@ -10,23 +10,19 @@ interface QuizModalProps {
 
 export default function PionirQuizModal({ onCorrect, onWrong }: QuizModalProps) {
   
-  // 1. New States to handle the different UI phases
   const [phase, setPhase] = useState<"question" | "correct" | "incorrect">("question");
   const [countdown, setCountdown] = useState(3);
 
-  // Pick a random question when the modal mounts
-  const [currentQ, setCurrentQ] = useState<Question>(() => {
+  const [currentQ] = useState<Question>(() => {
   const randomIndex = Math.floor(Math.random() * sheQuizData.length);
   return sheQuizData[randomIndex];
 });
 
-  // 2. The Countdown Timer Logic
   useEffect(() => {
     if (phase === "correct" && countdown > 0) {
       const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
-      return () => clearTimeout(timer); // Cleanup to prevent memory leaks
+      return () => clearTimeout(timer);
     } else if (phase === "correct" && countdown === 0) {
-      // When it hits 0, trigger the revive!
       onCorrect();
     }
   }, [phase, countdown, onCorrect]);
@@ -36,9 +32,6 @@ export default function PionirQuizModal({ onCorrect, onWrong }: QuizModalProps) 
   return (
     <div className="bg-white rounded-xl p-5 w-[90%] max-w-[340px] shadow-2xl flex flex-col gap-3 animate-fade-in pointer-events-auto">
       
-      {/* ======================================= */}
-      {/* PHASE 1: ASKING THE QUESTION */}
-      {/* ======================================= */}
       {phase === "question" && (
         <>
           <h2 className="text-lg font-bold text-red-600 border-b pb-1">
@@ -53,7 +46,7 @@ export default function PionirQuizModal({ onCorrect, onWrong }: QuizModalProps) 
               <button
                 key={idx}
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent ghost clicks
+                  e.stopPropagation();
                   if (idx === currentQ.correctAnswer) {
                     setPhase("correct");
                   } else {
@@ -72,9 +65,6 @@ export default function PionirQuizModal({ onCorrect, onWrong }: QuizModalProps) 
         </>
       )}
 
-      {/* ======================================= */}
-      {/* PHASE 2: CORRECT ANSWER (COUNTDOWN) */}
-      {/* ======================================= */}
       {phase === "correct" && (
         <div className="flex flex-col items-center justify-center text-center py-4 gap-2">
           <h2 className="text-xl font-bold text-green-600">Jawaban Benar!</h2>
@@ -87,9 +77,6 @@ export default function PionirQuizModal({ onCorrect, onWrong }: QuizModalProps) 
         </div>
       )}
 
-      {/* ======================================= */}
-      {/* PHASE 3: INCORRECT ANSWER (SHOW RIGHT ANSWER) */}
-      {/* ======================================= */}
       {phase === "incorrect" && (
         <div className="flex flex-col text-center py-2 gap-3">
           <h2 className="text-xl font-bold text-red-600">Jawaban Salah!</h2>

@@ -9,7 +9,7 @@ export default function PETA() {
   return (
     <section className="relative w-full min-h-screen md:min-h-[calc(140vh-80px)] lg:min-h-[calc(250vh-80px)] bg-[#5e0609] overflow-hidden flex flex-col justify-between">
       {/* Background Pattern */}
-      <div className="absolute inset-0 z-[1] bg-[url('/dokumentasi/background.svg')] bg-repeat bg-[length:100%_auto] opacity-40" />
+      <div className="absolute inset-0 bg-[url('/section1/PatternMerah.svg')] bg-repeat bg-[length:100%_auto] opacity-5" />
 
       {/* Decorative Lightning */}
       <div className="absolute inset-0 z-[3] opacity-10">
@@ -27,7 +27,7 @@ export default function PETA() {
         <Image
           src="/section2/awan.svg"
           alt=""
-          className="absolute top-8 md:top-0 lg:top-0 left-1/2 -translate-x-1/2 z-[2] w-screen max-w-none h-auto"
+          className="absolute top-8 md:top-0 lg:top-0 left-1/2 -translate-x-1/2 z-[2] w-screen max-w-none h-auto translate-y-[-2vh] lg:translate-y-[-25vh]"
           width={1920}
           height={350}
         />

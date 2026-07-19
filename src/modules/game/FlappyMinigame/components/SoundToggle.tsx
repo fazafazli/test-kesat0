@@ -3,21 +3,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { soundEngine } from "../engine/sound";
 
-/* ========================================
-   SoundToggle Component
-   Floating button that mutes / unmutes the game.
-   Also responds to the "M" keyboard shortcut.
-   ======================================== */
-
 const SoundToggle = () => {
   const [enabled, setEnabled] = useState<boolean>(soundEngine.isEnabled());
 
-  /** Flip the engine state and mirror it locally */
   const toggle = useCallback(() => {
     setEnabled(soundEngine.toggle());
   }, []);
 
-  /* "M" key shortcut — keeps the control accessible without the mouse */
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "KeyM") {
@@ -30,12 +22,10 @@ const SoundToggle = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [toggle]);
 
-  /** Toggle on click without triggering the underlying game interaction */
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       toggle();
-      /* Drop focus so a subsequent Space press controls the bird, not the button */
       e.currentTarget.blur();
     },
     [toggle]

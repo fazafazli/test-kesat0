@@ -26,13 +26,11 @@ export default function Navbar(): JSX.Element {
   return (
     <nav className={`navbar${scrolled ? " is-scrolled" : ""}`}>
       <div className="navbar-container">
-        {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={handleGoToTop}>
           <Image src="/section2/logo.webp" alt="Logo Pionir Kesatria" width={46} height={40} />
           <span className="logo-text">PIONIR KESATRIA 2026</span>
         </Link>
 
-        {/* Menu Desktop */}
         <ul className="navbar-menu">
           <li>
             <Link href="/dokumentasi" className={pathname === "/dokumentasi" ? "active" : ""}>
@@ -60,7 +58,6 @@ export default function Navbar(): JSX.Element {
           </li>
         </ul>
 
-        {/* Tombol Hamburger */}
         <button
           type="button"
           className="hamburger"
@@ -75,7 +72,6 @@ export default function Navbar(): JSX.Element {
         </button>
       </div>
 
-      {/* Menu Mobile */}
       <ul className={`navbar-menu-mobile${isOpen ? " is-open" : ""}`} aria-hidden={!isOpen}>
         <li>
           <Link

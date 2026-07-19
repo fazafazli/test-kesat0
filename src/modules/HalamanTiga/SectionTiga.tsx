@@ -5,7 +5,29 @@ import "./SectionTiga.css";
 import Image from "next/image";
 import Link from "next/link";
 import BoxKuning from "../../components/BoxKuning/BoxKuning";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+const VIDEO_ID = "QGtI48yhS7M";
+
+function useActivateVideo() {
+  const [isVideoActivated, setIsVideoActivated] = useState(false);
+
+  const activateVideo = useCallback(() => {
+    setIsVideoActivated(true);
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        activateVideo();
+      }
+    },
+    [activateVideo],
+  );
+
+  return { isVideoActivated, activateVideo, handleKeyDown };
+}
 
 export default function SectionTiga() {
   useEffect(() => {
@@ -31,9 +53,10 @@ export default function SectionTiga() {
     return () => observer.disconnect();
   }, []);
 
+  const { isVideoActivated, activateVideo, handleKeyDown } = useActivateVideo();
+
   return (
     <section className="section-tiga">
-      {/* Dekorasi absolut */}
       <Image
         src="/section3/SerpihanDaun2S3.svg"
         alt=""
@@ -43,9 +66,8 @@ export default function SectionTiga() {
         className="SerpihanDaun2S3"
       />
 
-      <DefaultLayout className="px-10! xl:px-10! 2xl:px-10! overflow-visible">
+      <DefaultLayout className="px-0! overflow-visible">
         <div className="section-tiga-inner fade-up">
-          {/* Awan kecil atas + Sayap */}
           <div className="animate-wiggle">
             <Image
               src="./section3/AwanKecilAtas.svg"
@@ -63,7 +85,6 @@ export default function SectionTiga() {
             height={900}
             className="SayapPertamaImg"
           />
-          {/* Blok 1 — Judul */}
           <div className="bagian1">
             <h2 className="tiga-text judul-tiga">halo kesatria muda</h2>
             <h2 className="tiga-text judul-tiga">
@@ -71,7 +92,6 @@ export default function SectionTiga() {
             </h2>
             <h2 className="tiga-text judul-tiga">kesatria merajut karsa</h2>
           </div>
-          {/* Blok 2 — Paragraf 1 */}
           <p className="paragraf1">
             Dalam mengenal Fakultas Teknik UGM sebagai lingkungan baru bagi
             Kesatria Muda yang akan menapaki dunia perkuliahan, tentunya
@@ -84,7 +104,6 @@ export default function SectionTiga() {
             Teknik&quot; dan &quot;Sejarah Kesatria&quot; yang wajib ditonton
             sebelum kita bertemu secara offline di Pionir Kesatria nanti.
           </p>
-          {/* Blok 3 — Box Besar + Paragraf 2 */}
           <div className="BoxBesarWrapper">
             <div className="BoxBesar-inner">
               <div className="Box1Wrapper">
@@ -113,7 +132,6 @@ export default function SectionTiga() {
               </p>
             </div>
           </div>
-          {/* Button 1 */}
           <div className="btn-wrapper">
             <Link
               href="https://drive.google.com/file/d/12GmcCEc0uTeOdYaGil7a9AruoMJPKLhj/view?usp=sharing"
@@ -125,7 +143,6 @@ export default function SectionTiga() {
               </button>
             </Link>
           </div>
-          {/* Awan sedang 1 */}
           <Image
             src="./section3/AwanSedang1.svg"
             alt=""
@@ -134,71 +151,8 @@ export default function SectionTiga() {
             height={300}
             className="AwanSedang1 animate-wiggleInverse"
           />
-          {/* Blok 4 — Sejarah Teknik */}
-          {/* <div className="grid-sejarah-teknik">
-            {/* Kolom Kiri: Tugu + Teks */}{" "}
-          {/*
-            <div className="kolom-kiri-sejarah">
-              <div className="TuguSampingWrapper">
-                <Image
-                  src="/section3/TuguSamping.svg"
-                  alt="Tugu Samping"
-                  width={1200}
-                  height={1200}
-                  className="TuguSamping"
-                />
-              </div>
-              <div className="bagian2">
-                <h2 className="tiga-text sejarahTeknik">sejarah teknik</h2>
-                <p className="paragraf3">
-                  Fakultas teknik berdiri pada tahun 1949 ini menjadi salah satu
-                  fakultas tertua di Universitas Gadjah Mada. Sampai saat ini
-                  Fakultas Teknik terus mengalami berbagai penyesuaian dan
-                  perkembangan. Mari simak video berikut ini!
-                </p>
-                <div className="btn-wrapper btn-wrapper--end">
-                  <Link href="https://drive.google.com/file/d/12GmcCEc0uTeOdYaGil7a9AruoMJPKLhj/view?usp=sharing">
-                  <button className="Button2">
-                    <span className="Button2-text">BACA MATERI</span>
-                  </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Kolom Kanan: Pita + Box */}{" "}
-          {/*
-            <div className="kolom-kanan-sejarah">
-              <Image
-                src="/section3/PitaBaru.svg"
-                alt="Pita 1"
-                width={900}
-                height={900}
-                className="PitaBaru1"
-              />
-              <BoxKuning className="box-nala2">
-                <Image
-                  src="/section3/Nala2.svg"
-                  alt="Nala 2"
-                  width={900}
-                  height={900}
-                  className="nala-img"
-                />
-              </BoxKuning>
-              <Image
-                src="./section3/AwanSedang2.svg"
-                alt=""
-                aria-hidden="true"
-                width={300}
-                height={300}
-                className="AwanSedang2"
-              />
-            </div>
-          </div> */}
-          {/* Blok 5 — Sejarah Kesatria */}
           <div className="bagian3">
             <div className="row-sejarah-kesatria">
-              {/* Kiri: Box + Pita */}
               <div className="kolom-box-pita">
                 <Image
                   src="./section3/AwanSedang1.svg"
@@ -208,15 +162,68 @@ export default function SectionTiga() {
                   height={300}
                   className="AwanSedang3 animate-wiggle"
                 />
-                <BoxKuning className="box-nala3">
+
+                <div
+                  className={`VideoThumbWrapper${isVideoActivated ? " is-video-playing" : ""}`}
+                >
                   <Image
-                    src="/section3/Nala3.webp"
-                    alt="Nala 3"
-                    width={1000}
-                    height={1000}
-                    className="nala-img"
+                    src="/section2/baseVideo.svg"
+                    alt=""
+                    aria-hidden="true"
+                    width={300}
+                    height={300}
+                    className="BaseVideo"
                   />
-                </BoxKuning>
+
+                  <div className="VideoInner">
+                    {isVideoActivated ? (
+                      <iframe
+                        className="VideoIframe"
+                        src={`https://www.youtube.com/embed/${VIDEO_ID}?enablejsapi=0&autoplay=1&rel=0&modestbranding=1`}
+                        title="Video Sejarah Kesatria"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Putar video Sejarah Kesatria"
+                        onClick={activateVideo}
+                        onKeyDown={handleKeyDown}
+                        style={{ position: "absolute", inset: 0, cursor: "pointer" }}
+                      >
+                        <Image
+                          src={`https://i.ytimg.com/vi/${VIDEO_ID}/hqdefault.jpg`}
+                          alt=""
+                          fill
+                          sizes="(max-width: 640px) 100vw, 45vw"
+                          className="object-cover"
+                          aria-hidden="true"
+                          loading="lazy"
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <Image
+                    src="/section2/frameVideo.svg"
+                    alt=""
+                    aria-hidden="true"
+                    width={300}
+                    height={300}
+                    className="VideoVisual"
+                  />
+                  <Image
+                    src="/section2/playVideo.svg"
+                    alt="Putar"
+                    width={300}
+                    height={300}
+                    className="PlayVideo"
+                  />
+                </div>
+
                 <Image
                   src="/section3/PitaBaru2.svg"
                   alt="Pita 2"
@@ -226,7 +233,6 @@ export default function SectionTiga() {
                 />
               </div>
 
-              {/* Kanan: Teks */}
               <div className="kolom-teks-kesatria">
                 <h2 className="tiga-text sejarahKesatria">Kala Itihasa: </h2>
                 <h2 className="tiga-text sejarahKesatria">
@@ -243,14 +249,6 @@ export default function SectionTiga() {
                   yang penuh makna, hingga lahirnya simbol-simbol abadi pencetak
                   para insinyur-insyinyur bangsa. Selamat menyaksikan!
                 </p>
-
-                {/* <div className="btn-wrapper btn-wrapper--start">
-                  <Link href="https://drive.google.com/file/d/12GmcCEc0uTeOdYaGil7a9AruoMJPKLhj/view?usp=sharing">
-                    <button className="Button3">
-                      <span className="Button3-text">BACA MATERI</span>
-                    </button>
-                  </Link>
-                </div> */}
               </div>
             </div>
           </div>

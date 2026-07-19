@@ -29,3 +29,28 @@
   transition: transform 1.8s cubic-bezier(.22, 1, .36, 1);
   z-index: 50;
 }
+
+.intro-skip {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  padding: 8px 18px;
+  border: 1px solid rgba(246, 217, 152, 0.4);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #f6d998;
+  font-family: var(--font-poppins, Poppins, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.25s, opacity 0.25s;
+  opacity: 0.75;
+}
+
+.intro-skip:hover {
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 1;
+}

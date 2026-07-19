@@ -1,23 +1,11 @@
 "use client";
 
-/* ========================================
-   Sound Engine
-   Generates retro-style sound effects using
-   Web Audio API — no external files needed.
-   ======================================== */
-
 export type SoundName = "flap" | "score" | "hit" | "swoosh";
 
 class SoundEngine {
   private ctx: AudioContext | null = null;
   private enabled = true;
 
-  /* ---- Context management ---- */
-
-  /**
-   * Lazily create / resume AudioContext.
-   * Must be called after a user gesture (browser autoplay policy).
-   */
   private getContext(): AudioContext {
     if (!this.ctx) {
       this.ctx = new AudioContext();
@@ -28,15 +16,11 @@ class SoundEngine {
     return this.ctx;
   }
 
-  /* ---- Public API ---- */
-
-  /** Toggle sound on / off and return the new state */
   toggle(): boolean {
     this.enabled = !this.enabled;
     return this.enabled;
   }
 
-  /** Whether sound is currently enabled */
   isEnabled(): boolean {
     return this.enabled;
   }

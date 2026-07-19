@@ -8,7 +8,7 @@
   min-height: auto;
   z-index: 0;
   color: #fcf0d6;
-  padding-bottom: 5vw;
+  padding-bottom: clamp(20px, 5vw, 80px);
 }
 
 .section-tiga::before {
@@ -45,6 +45,7 @@
   z-index: 10;
   bottom: 50px;
   right: -50px;
+  max-width: 300px;
 }
 
 .AwanSedang1 {
@@ -71,17 +72,23 @@
   height: auto;
   top: -90px;
   right: -10%;
+  max-width: 400px;
 }
 
 /* =====================
    CONTENT WRAPPER
+   Padding horizontal disatukan di sini,
+   mengikuti pola .section-lima-inner
    ===================== */
 .section-tiga-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-top: 5vw;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 5vw 100px 0;
+  box-sizing: border-box;
 }
 
 /* =====================
@@ -110,6 +117,7 @@
   width: clamp(300px, 100%, 1440px);
   height: auto;
   margin-bottom: -100px;
+  max-width: 100%;
 }
 
 .SayapPertamaImg {
@@ -117,10 +125,13 @@
   height: auto;
   z-index: 2;
   margin-bottom: -80px;
+  max-width: 100%;
 }
 
 /* =====================
    BLOK 1 — JUDUL
+   Padding kiri-kanan dihapus, sudah ditangani
+   oleh .section-tiga-inner
    ===================== */
 .bagian1 {
   display: flex;
@@ -130,6 +141,7 @@
   width: 100%;
   max-width: 1440px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .judul-tiga {
@@ -138,11 +150,13 @@
   font-weight: 500;
   margin: 0 0 20px;
   padding: 0;
-  line-height: 1;
+  line-height: 1.15;
 }
 
 /* =====================
    PARAGRAF 1
+   Padding kiri-kanan dihapus, sudah ditangani
+   oleh .section-tiga-inner
    ===================== */
 .paragraf1 {
   position: relative;
@@ -153,9 +167,9 @@
   text-align: justify;
   font-size: clamp(1rem, 1.75vw, 2.5rem);
   font-family: "Poppins", sans-serif;
-  padding: 0;
-  line-height: 1.5;
+  line-height: 1.6;
   color: #fcf0d6;
+  box-sizing: border-box;
 }
 
 /* =====================
@@ -173,6 +187,7 @@
   background: linear-gradient(180deg, #8b0000, #6b0000);
   border-radius: 80px;
   border: 3px solid #c8973a;
+  box-sizing: border-box;
 }
 
 .BoxBesar-inner {
@@ -199,9 +214,9 @@
 .paragraf2 {
   width: 60%;
   text-align: justify;
-  font-family: "Poppins", serif;
-  font-size: clamp(0.875rem, 1.5vw, 2rem);
-  line-height: 1.75;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1rem, 1.75vw, 2.5rem);
+  line-height: 1.6;
   font-weight: 500;
   color: #a01326;
 }
@@ -234,6 +249,8 @@
 
 /* =====================
    BUTTON WRAPPER
+   Padding kiri-kanan dihapus, sudah ditangani
+   oleh .section-tiga-inner
    ===================== */
 .btn-wrapper {
   display: flex;
@@ -241,6 +258,8 @@
   margin-top: -34px;
   position: relative;
   z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-wrapper--end {
@@ -303,12 +322,12 @@
 }
 
 .sejarahTeknik {
-  font-size: clamp(1rem, 4vw, 5rem);
+  font-size: clamp(2rem, 4vw, 5rem);
   font-family: "Firlest", serif;
   font-weight: 500;
   margin: 0;
   padding: 0;
-  line-height: 1;
+  line-height: 1.15;
   text-align: left;
 }
 
@@ -318,7 +337,7 @@
   text-align: justify;
   font-size: clamp(1rem, 1.75vw, 2.5rem);
   font-family: "Poppins", sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
   color: #fcf0d6;
 }
 
@@ -342,6 +361,8 @@
 
 /* =====================
    BAGIAN 3 — SEJARAH KESATRIA
+   Padding kiri-kanan dihapus, sudah ditangani
+   oleh .section-tiga-inner
    ===================== */
 .bagian3 {
   display: flex;
@@ -353,6 +374,7 @@
   width: 100%;
   margin-top: 80px;
   max-width: 1440px;
+  box-sizing: border-box;
 }
 
 .row-sejarah-kesatria {
@@ -362,6 +384,7 @@
   gap: 20px;
   width: 100%;
   margin-top: 100px;
+  flex-wrap: wrap; 
 }
 
 .kolom-box-pita {
@@ -369,7 +392,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  flex: 0 0 45%;
+  flex: 1 1 320px;
+  max-width: 45%;
   position: relative;
   overflow: visible;
 }
@@ -387,18 +411,18 @@
 .kolom-teks-kesatria {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 1 320px;
   margin-top: -50px;
   min-width: 0;
 }
 
 .sejarahKesatria {
-  font-size: clamp(10px, 70px, 500px);
+  font-size: clamp(2rem, 4vw, 5rem);
   font-family: "Firlest", serif;
   font-weight: 500;
   margin: 0;
   padding: 0;
-  line-height: 1;
+  line-height: 1.15;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -407,14 +431,86 @@
 .paragraf4 {
   width: 100%;
   text-align: justify;
-  font-size: clamp(0.875rem, 1.5vw, 2rem);
+  font-size: clamp(1rem, 1.75vw, 2.5rem);
   font-family: "Poppins", sans-serif;
   margin: 20px 0 0;
   padding: 0;
-  line-height: 1.5;
+  line-height: 1.6;
   position: relative;
   z-index: 3;
   color: #fcf0d6;
+}
+
+/* =====================================================
+   VIDEO THUMB
+   ===================================================== */
+
+.VideoThumbWrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.VideoIframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  z-index: 2;
+}
+.VideoInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: 89%;
+  height: 89%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: #000;
+  border-radius: clamp(8px, 2vw, 24px);
+}
+.BaseVideo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+.VideoVisual {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.PlayVideo {
+  position: absolute;
+  width: 20%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 4;
+  opacity: 1;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.VideoThumbWrapper.is-video-playing .PlayVideo {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  filter: blur(3px);
 }
 
 /* =====================
@@ -431,7 +527,7 @@
   outline: 3px solid #e8b86d;
   outline-offset: -6px;
   border-radius: 10px;
-  font-size: clamp(0.875rem, 1.5vw, 2rem);
+  font-size: clamp(0.9rem, 1.5vw, 2rem);
   font-family: "Poppins", serif;
   font-weight: 700;
   letter-spacing: clamp(0.5px, 2px, 2.5px);
@@ -476,6 +572,10 @@
     inset 0 1px 3px rgba(255, 255, 255, 0.2);
 }
 
+/* =========================================================
+   BREAKPOINT: TABLET LANDSCAPE / DESKTOP KECIL (max 1024px)
+   Nilai padding disamakan dengan section-lima-inner: 40px
+   ========================================================= */
 @media (max-width: 1024px) {
   .section-tiga {
     min-height: auto;
@@ -498,13 +598,18 @@
     display: none;
   }
 
+  .section-tiga-inner {
+    padding: 40px 40px 0;
+  }
+
   .BoxBesarWrapper {
-    max-height: 450px;
+    max-height: none;
     min-height: 300px;
+    width: 100%;
   }
 
   .BoxBesar-inner {
-    max-height: 400px;
+    max-height: none;
     min-height: 300px;
   }
 
@@ -541,10 +646,15 @@
     justify-content: flex-start;
     margin-left: 0;
     padding-left: 0;
-    margin-top: 0;
+    margin-top: 100px;
     text-align: left;
     height: 100%;
-    margin-top: 100px;
+  }
+
+  .judul-tiga,
+  .sejarahTeknik,
+  .sejarahKesatria {
+    font-size: clamp(1.75rem, 4.5vw, 4rem);
   }
 
   .sejarahTeknik {
@@ -561,7 +671,8 @@
   }
   .kolom-box-pita {
     width: 100%;
-    flex: 1;
+    max-width: 100%;
+    flex: 1 1 100%;
   }
 
   .box-nala3 {
@@ -575,6 +686,7 @@
   .kolom-teks-kesatria {
     gap: 0px;
     margin-top: 0px;
+    flex: 1 1 100%;
   }
 
   .AwanSedang3 {
@@ -591,6 +703,11 @@
     margin-top: 30px;
   }
 }
+
+/* =========================================================
+   BREAKPOINT: TABLET PORTRAIT (max 768px)
+   Nilai padding disamakan dengan section-lima-inner: 40px
+   ========================================================= */
 @media (max-width: 768px) {
   .section-tiga {
     min-height: auto;
@@ -599,7 +716,11 @@
     -webkit-text-stroke: 0.5px var(--outline-color, #e8920d);
   }
   .sejarahKesatria {
-    font-size: clamp(1.5rem, 4vw, 5rem);
+    font-size: clamp(1.75rem, 5vw, 3.5rem);
+  }
+  .judul-tiga,
+  .sejarahTeknik {
+    font-size: clamp(1.75rem, 5vw, 3.5rem);
   }
   .AwanKecilAtas {
     margin-bottom: 0px;
@@ -616,13 +737,18 @@
     display: none;
   }
 
+  .section-tiga-inner {
+    padding: 0 40px 0;
+  }
+
   .BoxBesarWrapper {
-    max-height: 450px;
+    max-height: none;
     min-height: 300px;
+    width: 100%;
   }
 
   .BoxBesar-inner {
-    max-height: 400px;
+    max-height: none;
     min-height: 300px;
   }
 
@@ -678,7 +804,8 @@
   }
   .kolom-box-pita {
     width: 100%;
-    flex: 1;
+    max-width: 100%;
+    flex: 1 1 100%;
   }
 
   .box-nala3 {
@@ -686,51 +813,80 @@
   }
 
   .row-sejarah-kesatria {
-    gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
   }
 
   .kolom-teks-kesatria {
+    margin-top: -80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 0px;
-    margin-top: 0;
+    flex: 1 1 100%;
+  }
+
+  .sejarahKesatria {
+    justify-content: center;
+  }
+
+  .paragraf4 {
+    text-align: justify;
   }
 
   .AwanSedang3 {
-    margin-top: 50px;
-    margin-right: -60px;
-    width: 70%;
+    width: 60%;
+    top: -140px;
+    right: -15%;
   }
 
   .PitaBaru2 {
-    margin-top: -50px;
+    width: 100%;
+    left: -15%;
+    margin-top: 0px;
+    top: -50px;
   }
 
   .bagian3 {
-    margin-top: 0;
+    margin-top: 70px;
   }
 }
 
+/* =========================================================
+   BREAKPOINT: MOBILE (max 640px)
+   Nilai padding disamakan dengan section-lima-inner: 30px
+   ========================================================= */
 @media (max-width: 640px) {
   .section-tiga {
-    padding-top: 20vw;
+    padding-top: 12vw;
   }
 
   .section-tiga-inner {
-    padding-top: 10vw;
+    padding: 8vw 30px 0;
   }
 
   .SayapPertamaImg {
-    width: clamp(100px, 2100vw, 768px);
+    width: 100%;
+    max-width: 768px;
     height: auto;
     margin-bottom: -10px;
   }
 
   .AwanKecilAtas {
-    width: clamp(200px, 100%, 768px);
+    width: 100%;
+    max-width: 768px;
     height: auto;
     margin-bottom: -20px;
   }
+  .judul-tiga,
+  .sejarahTeknik,
+  .sejarahKesatria {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+  }
+
   .judul-tiga {
-    font-size: clamp(1.5rem, 7vw, 3rem);
     margin: 0 0 10px;
   }
 
@@ -738,27 +894,36 @@
   .paragraf2 {
     width: 100%;
   }
-  .paragraf3 {
-    font-size: clamp(1rem, 2vw, 2rem);
-    line-height: 1.4;
-    margin: 0;
-  }
+
+  .paragraf1,
+  .paragraf2,
+  .paragraf3,
   .paragraf4 {
-    font-size: clamp(0.875rem, 2vw, 1.5rem);
-    line-height: 1.4;
+    font-size: clamp(0.95rem, 3.6vw, 1.4rem);
+    line-height: 1.5;
+  }
+
+  .paragraf3 {
+    margin: 0;
   }
 
   .BoxBesarWrapper {
     padding: 4px;
     border-radius: 40px;
-    min-height: 915px;
+    min-height: 0;
+    width: 100%;
   }
   .BoxBesar-inner {
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
-    min-height: 900px;
+    padding: 28px 24px;
+    min-height: 0;
     border-radius: 40px;
+  }
+
+  .paragraf2 {
+    width: 100%;
+    text-align: justify;
   }
 
   .PitaBaru1 {
@@ -766,7 +931,7 @@
     top: -25px;
   }
   .box-nala1 {
-    width: clamp(100px, 70vw, 300px);
+    width: clamp(160px, 60vw, 280px);
   }
 
   .AwanSedang2 {
@@ -774,6 +939,9 @@
   }
   .AwanSedang1 {
     display: none;
+  }
+  .AwanSedang3 {
+    display: none; 
   }
   .grid-sejarah-teknik {
     grid-template-columns: 1fr;
@@ -816,60 +984,55 @@
     display: none;
   }
 
-  .row-sejarah-kesatria {
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    margin-top: 40px;
-  }
-  .bagian3 {
-    margin-top: 70px;
-  }
   .box-nala3 {
-    width: clamp(100px, 100%, 300px);
+    width: clamp(160px, 100%, 280px);
     margin-top: -80px;
   }
 
-  .PitaBaru2 {
-    width: 100%;
-    left: -30%;
-    margin-top: 0px;
-    top: -50px;
+  .row-sejarah-kesatria {
+    gap: 12px;
+    margin-top: 20px;
   }
-  .AwanSedang3 {
-    width: 80%;
-    top: -170px;
-    right: -30%;
+
+  .kolom-box-pita {
+    width: calc(100% + 24px);
+    max-width: calc(100% + 24px);
+    margin: 0 -12px;
   }
 
   .kolom-teks-kesatria {
-    margin-top: -80px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 0px;
+    margin-top: -40px;
   }
 
-  .sejarahKesatria {
-    justify-content: center;
-  }
   .tiga-text {
     -webkit-text-stroke: 0.5px var(--outline-color, #e8920d);
   }
+
+  .btn-wrapper {
+    margin-top: -34px;
+  }
 }
 
+/* =========================================================
+   BREAKPOINT: MOBILE KECIL (max 400px)
+   ========================================================= */
 @media (max-width: 400px) {
   .section-tiga-inner {
-    padding-top: 0;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  .judul-tiga {
-    font-size: clamp(1.25rem, 1vw, 5rem);
-  }
-  .paragraf1 {
-    font-size: clamp(0.75rem, 1vw, 5rem);
-  }
+
+  .judul-tiga,
+  .sejarahTeknik,
   .sejarahKesatria {
-    font-size: clamp(1.5rem, 1vw, 2rem);
+    font-size: clamp(1.3rem, 6.5vw, 2rem);
+  }
+  .paragraf1,
+  .paragraf2,
+  .paragraf3,
+  .paragraf4 {
+    font-size: clamp(0.85rem, 3.4vw, 1.1rem);
   }
   .Box1Wrapper {
     display: flex;
@@ -880,38 +1043,45 @@
     right: 0;
   }
   .BoxBesar-inner {
-    max-height: 600px;
-    min-height: 600px;
+    padding: 22px 18px;
+    max-height: none;
+    min-height: 0;
   }
   .BoxBesarWrapper {
-    max-height: 615px;
-    min-height: 615px;
+    padding: 3px;
+    max-height: none;
+    min-height: 0;
   }
   .box-nala1 {
-    width: clamp(180px, 85vw, 260px);
+    width: clamp(160px, 70vw, 240px);
     margin: 0 auto;
   }
 
-  .paragraf2 {
-    font-size: clamp(0.6rem, 1vw, 5rem);
-  }
   .PitaBaru1 {
     top: -40px;
   }
 }
 
+/* =========================================================
+   BREAKPOINT: MOBILE SANGAT KECIL (max 350px)
+   ========================================================= */
 @media (max-width: 350px) {
   .section-tiga-inner {
     padding-top: 0;
+    padding-left: 16px;
+    padding-right: 16px;
   }
-  .sejarahKesatria {
-    font-size: clamp(1.5rem, 1vw, 2rem)
+
+  .sejarahKesatria,
+  .judul-tiga,
+  .sejarahTeknik {
+    font-size: clamp(1.2rem, 6.5vw, 1.8rem);
   }
-  .judul-tiga {
-    font-size: clamp(1.25rem, 1vw, 5rem);
-  }
-  .paragraf1 {
-    font-size: clamp(0.75rem, 1vw, 5rem);
+  .paragraf1,
+  .paragraf2,
+  .paragraf3,
+  .paragraf4 {
+    font-size: clamp(0.8rem, 3.4vw, 1rem);
   }
   .Box1Wrapper {
     display: flex;
@@ -922,28 +1092,66 @@
     right: 0;
   }
 
-  .section-tiga.animate-in .BoxBesarWrapper {
-    border-radius: 20px;
-  }
-
   .BoxBesar-inner {
-    max-height: 700px;
-    min-height: 700px;
+    padding: 18px 16px;
+    max-height: none;
+    min-height: 0;
   }
   .BoxBesarWrapper {
-    max-height: 715px;
-    min-height: 715px;
+    padding: 2px;
+    max-height: none;
+    min-height: 0;
   }
 
   .box-nala1 {
-    width: clamp(160px, 85vw, 240px);
+    width: clamp(140px, 68vw, 220px);
     margin: 0 auto;
   }
 
-  .paragraf2 {
-    font-size: clamp(0.6rem, 1vw, 5rem);
-  }
   .PitaBaru1 {
     top: -40px;
+  }
+}
+
+/* =====================
+   LANDSCAPE (mobile)
+   ===================== */
+@media (orientation: landscape) and (max-height: 500px) {
+  .row-sejarah-kesatria {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .kolom-box-pita {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .kolom-teks-kesatria {
+    margin-top: 0;
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+  }
+
+  .sejarahKesatria {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    justify-content: center;
+  }
+
+  .paragraf4 {
+    font-size: clamp(0.95rem, 3.6vw, 1.4rem);
+    margin-top: 8px;
+    line-height: 1.5;
+    text-align: justify;
+  }
+
+  .bagian3 {
+    margin-top: 15px;
+    padding: 0 16px;
   }
 }

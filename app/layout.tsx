@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import "../src/components/NavigationBar/Navbar.css";
+import "../src/components/audio/AudioButton.css";
 import { AudioProvider } from "../src/components/audio/AudioProvider";
 
 const poppins = Poppins({
@@ -31,7 +32,9 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${poppins.variable} ${firlest.variable}`}>
       <body>
-        <AudioProvider>{children}</AudioProvider>
+        <AudioProvider>
+          {children}
+        </AudioProvider>
       </body>
     </html>
   );

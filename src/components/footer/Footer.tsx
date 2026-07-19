@@ -6,11 +6,11 @@ type PageFooterProps = {
 
 export default function PageFooter({ showDecor = true }: PageFooterProps) {
   return (
-    <div className="relative w-full h-[150px] md:h-[300px] lg:h-[500px] pointer-events-none">
+    <div className="relative w-full h-[180px] md:h-[300px] lg:h-[500px] pointer-events-none">
       <Image
-        src="/dokumentasi/bando.svg"
+        src="/section3/PitaBaru2.svg"
         alt=""
-        className="absolute bottom-[0vh] lg:bottom-[-6vh] left-[14vw] z-[2] w-[29vw] -translate-x-1/2"
+        className="absolute bottom-[2vh] max-md:landscape:bottom-[6vh] lg:bottom-[18vh] -left-[3vw] z-[2] w-[55vw] -translate-x-1/2"
         width={600}
         height={100}
         loading="lazy"
@@ -19,7 +19,7 @@ export default function PageFooter({ showDecor = true }: PageFooterProps) {
       <Image
         src="/dokumentasi/footer_dekor.svg"
         alt=""
-        className="absolute bottom-[13vh] md:bottom-[28vh] lg:bottom-[42vh] left-0 w-[13.5vw]"
+        className="absolute bottom-[7vh] max-md:landscape:bottom-[11vh] md:bottom-[28vh] lg:bottom-[42vh] left-0 w-[13.5vw]"
         width={200}
         height={200}
         loading="lazy"
@@ -28,7 +28,7 @@ export default function PageFooter({ showDecor = true }: PageFooterProps) {
       <Image
         src="/dokumentasi/footer_dekor2.svg"
         alt=""
-        className="absolute bottom-[14vh] md:bottom-[28vh] lg:bottom-[53vh] right-0 w-[13.5vw]"
+        className="absolute bottom-[8vh] max-md:landscape:bottom-[12vh] md:bottom-[28vh] lg:bottom-[53vh] right-0 w-[13.5vw]"
         width={200}
         height={200}
         loading="lazy"
@@ -64,7 +64,7 @@ export default function PageFooter({ showDecor = true }: PageFooterProps) {
       <Image
         src="/dokumentasi/footer.svg"
         alt=""
-        className="absolute bottom-[16vh] md:bottom-[18vh] lg:bottom-[27vh] left-1/2 z-[5] w-[70vw] md:w-[65vw] lg:w-[45vw] -translate-x-1/2"
+        className="absolute bottom-[9vh] max-md:landscape:bottom-[13vh] md:bottom-[18vh] lg:bottom-[27vh] left-1/2 z-[5] w-[70vw] md:w-[65vw] lg:w-[45vw] -translate-x-1/2"
         width={500}
         height={200}
         loading="lazy"
@@ -73,7 +73,7 @@ export default function PageFooter({ showDecor = true }: PageFooterProps) {
       <Image
         src="/dokumentasi/SignEmas.webp"
         alt=""
-        className="absolute bottom-[4vh] left-[18vw] z-[5] w-[24vw]"
+        className="absolute bottom-[1vh] max-md:landscape:bottom-[5vh] left-[18vw] z-[5] w-[24vw]"
         width={350}
         height={350}
         loading="lazy"

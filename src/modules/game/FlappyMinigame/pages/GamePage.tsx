@@ -7,33 +7,18 @@ import { useInputHandler } from "../hooks/useInputHandler";
 import { useSoundEffects } from "../hooks/useSoundEffects";
 import { useGameInteraction } from "../hooks/useGameInteraction";
 
-/* ========================================
-   GamePage
-   Main game page that composes canvas and UI overlays.
-   The container dynamically scales to fill the viewport
-   while maintaining the native 2:3 aspect ratio.
-   ======================================== */
-
 const GamePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  /**
-   * Track whether the last interaction came from a touch event.
-   * This prevents the subsequent synthetic click from firing a second action.
-   */
   const isTouchRef = useRef(false);
 
-  /* Bind keyboard/touch input handlers */
   useInputHandler();
 
-  /* Reactive sound effects (score, hit, swoosh) */
   useSoundEffects();
 
-  /* Shared action dispatcher used by both touch and click inputs */
   const handleInteraction = useGameInteraction();
 
-  /** Handle touch: act immediately, flag to skip the subsequent click */
   const handleTouchStart = useCallback(
     (e: TouchEvent) => {
       e.preventDefault();
@@ -43,7 +28,6 @@ const GamePage = () => {
     [handleInteraction]
   );
 
-  /** Handle click: skip if this click was synthesized from a touch */
   const handleClick = useCallback(() => {
     if (isTouchRef.current) {
       isTouchRef.current = false;
@@ -90,7 +74,6 @@ const GamePage = () => {
           role="application"
           aria-label="Flappy Bird Game"
         >
-          {/* Canvas game rendering */}
           <GameCanvas />
           <button
             type="button"
@@ -103,11 +86,9 @@ const GamePage = () => {
             {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
           </button>
 
-          {/* UI Overlays */}
           <StartScreen />
           <GameOverScreen />
 
-          {/* Sound mute / unmute control */}
           <SoundToggle />
         </div>
 

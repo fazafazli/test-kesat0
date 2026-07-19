@@ -3,10 +3,6 @@
 import React, { useEffect, useState } from "react";
 import "./IntroKesatria.css";
 
-{
-  /*IntroKesatria*/
-}
-
 interface IntroKesatriaProps {
   onFinish?: () => void;
   onSectionAppear?: () => void;
@@ -16,8 +12,6 @@ interface IntroKesatriaProps {
   logoImageSrc?: string;
   logoImageAlt?: string;
 
-  /** 4 gambar wayang, tampil dari AWAL intro (2 kiri, 2 kanan).
-   *  Kalau salah satu tidak diisi, wayang itu nggak dirender. */
   wayangKiriAtasSrc?: string;
   wayangKiriBawahSrc?: string;
   wayangKananAtasSrc?: string;
@@ -64,15 +58,15 @@ export default function IntroKesatria({
   wayangKananAtasSrc,
   wayangAlt = "Wayang",
 }: IntroKesatriaProps) {
-  const [playKey, setPlayKey] = useState(0);
   const [flying, setFlying] = useState(false);
   const [sparks, setSparks] = useState<Spark[]>([]);
-  useEffect(() => {
-    setSparks(makeSparks(40));
-  }, [playKey]);
 
   useEffect(() => {
-    setFlying(false);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSparks(makeSparks(40));
+  }, []);
+
+  useEffect(() => {
     const flyTimer = setTimeout(() => setFlying(true), FLYING_DELAY_MS);
     const sectionTimer = setTimeout(
       () => onSectionAppear?.(),
@@ -84,7 +78,7 @@ export default function IntroKesatria({
       clearTimeout(sectionTimer);
       clearTimeout(finishTimer);
     };
-  }, [playKey]);
+  }, []);
   useEffect(() => {
     const id = "rb-google-fonts";
     if (document.getElementById(id)) return;
@@ -97,10 +91,9 @@ export default function IntroKesatria({
   }, []);
 
   return (
-    <div className={`rb-root${flying ? " flying" : ""}`} key={playKey}>
+    <div className={`rb-root${flying ? " flying" : ""}`}>
       <div className="rb-vignette" />
 
-      {/* Latar berubah jadi merah polos begitu burung mulai terbang */}
       <div className={`rb-red-flash${flying ? " show" : ""}`} />
 
       <div className="rb-frame">
@@ -110,9 +103,6 @@ export default function IntroKesatria({
         <span className="bl" />
       </div>
 
-      {/* Wayang — tampil dari AWAL, 2 tiap sisi disusun berdampingan,
-          geser bareng menjauh pas burung mulai terbang (bareng class
-          "flying" di .rb-root) */}
       {wayangKiriAtasSrc && (
         <div className="rb-wayang-row rb-wayang-row-kiri">
           {wayangKiriAtasSrc && (
@@ -150,7 +140,6 @@ export default function IntroKesatria({
         ))}
       </div>
 
-      {/* Burung */}
       <div className={`rb-bird-wrap${flying ? " flying" : ""}`}>
         <div className="rb-wing-flap">
           <img
@@ -162,7 +151,6 @@ export default function IntroKesatria({
         </div>
       </div>
 
-      {/* Logo */}
       <div className="rb-crest">
         <div className="rb-crest-ring">
           {logoImageSrc ? (
