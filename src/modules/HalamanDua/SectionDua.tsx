@@ -11,20 +11,22 @@ const YOUTUBE_VIDEO_ID = "zuJbK71Zjfo";
 const GUNUNGAN_POSITIONS = ["g-outer-left", "g-inner-left", "g-inner-right", "g-outer-right"] as const;
 
 function useAppearOnScroll(ref: React.RefObject<HTMLElement | null>) {
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        el.classList.toggle("animate-in", entry.isIntersecting);
-      },
+      ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.1 },
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, [ref]);
+
+  return isVisible;
 }
 
 export default function SectionDua() {
@@ -41,7 +43,7 @@ export default function SectionDua() {
   });
 
   const videoFrameRef = useRef<HTMLDivElement | null>(null);
-  useAppearOnScroll(videoFrameRef);
+  const isVideoFrameVisible = useAppearOnScroll(videoFrameRef);
 
   const activateVideo = useCallback(() => {
     setIsVideoActivated(true);
@@ -89,7 +91,7 @@ export default function SectionDua() {
             </div>
             <div
               ref={videoFrameRef}
-              className={`video-frame-container${isVideoActivated ? " is-video-playing" : ""}`}
+              className={`video-frame-container${isVideoFrameVisible ? " animate-in" : ""}${isVideoActivated ? " is-video-playing" : ""}`}
             >
               <Image src="/section2/baseVideo.svg" alt="" width={962} height={556} className="video-screen-layer screen-layer-5" aria-hidden="true" unoptimized loading="lazy" />
               <div className="video-inner">

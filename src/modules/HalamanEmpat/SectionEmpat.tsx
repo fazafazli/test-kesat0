@@ -236,19 +236,19 @@ export default function SectionEmpat() {
           </div>
 
           <div className="bd-inner">
-            <div className="font-[Poppins] relative mx-auto flex w-full flex-col items-center gap-0 px-4 py-0 sm:px-8 xl:px-30 xl:py-0 2xl:px-60">
+            <div className="font-Poppins relative mx-auto flex w-full flex-col items-center gap-0 px-4 py-0 sm:px-8 xl:px-30 xl:py-0 2xl:px-60">
               <div className="relative w-full max-w-[1440px]">
                 <div className="bd-content">
                   <header className="bd-header">
-                    <span className="bd-grad bd-eyebrow" aria-hidden="true">bagian 2:</span>
-                    <h2 className="bd-grad bd-title">lika-liku kesatria</h2>
+                    <span className="wg-gradient-text bd-grad bd-eyebrow" aria-hidden="true">bagian 2:</span>
+                    <h2 className="wg-gradient-text bd-grad bd-title">lika-liku kesatria</h2>
                   </header>
 
                   <p className="bd-intro">{INTRO}</p>
 
                   <article id="bd-panel" className="bd-card" role="tabpanel" aria-labelledby={`bd-tab-${active.id}`}>
                     <div key={active.id} className="bd-card-body">
-                      <h3 className="bd-grad bd-card-title">{active.title}</h3>
+                      <h3 className="wg-gradient-text bd-grad bd-card-title">{active.title}</h3>
 
                       <div className="bd-grid">
                         <div className="bd-frame">

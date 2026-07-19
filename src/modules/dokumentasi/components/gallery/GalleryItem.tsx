@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { forwardRef, memo } from "react";
+import { memo, type Ref } from "react";
 import { cn } from "@/utils/cn";
 
 interface GalleryItemProps {
+  ref?: Ref<HTMLDivElement>;
   src: string;
   width: number;
   height: number;
@@ -12,35 +13,40 @@ interface GalleryItemProps {
   style?: React.CSSProperties;
 }
 
-const GalleryItem = forwardRef<HTMLDivElement, GalleryItemProps>(
-  ({ src, width, height, priority = false, loading, className, style }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 will-change-transform",
-          className
-        )}
-        style={style}
-      >
-        <div className="relative overflow-hidden rounded-xl md:rounded-3xl border-[6px] border-white/80 shadow-lg bg-white/10">
-          <Image
-            src={src}
-            alt="PIONIR Gallery Image"
-            width={width}
-            height={height}
-            priority={priority}
-            loading={priority ? undefined : loading ?? "lazy"}
-            quality={75}
-            sizes="(max-width: 767px) 45vw, (max-width: 1024px) 30vw, 22vw"
-            className="object-cover w-full h-full pointer-events-none"
-          />
-        </div>
+function GalleryItem({
+  ref,
+  src,
+  width,
+  height,
+  priority = false,
+  loading,
+  className,
+  style,
+}: GalleryItemProps) {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 will-change-transform",
+        className
+      )}
+      style={style}
+    >
+      <div className="relative overflow-hidden rounded-xl md:rounded-3xl border-[6px] border-white/80 shadow-lg bg-white/10">
+        <Image
+          src={src}
+          alt="PIONIR Gallery Image"
+          width={width}
+          height={height}
+          priority={priority}
+          loading={priority ? undefined : (loading ?? "lazy")}
+          quality={75}
+          sizes="(max-width: 767px) 45vw, (max-width: 1024px) 30vw, 22vw"
+          className="object-cover w-full h-full pointer-events-none"
+        />
       </div>
-    );
-  }
-);
-
-GalleryItem.displayName = "GalleryItem";
+    </div>
+  );
+}
 
 export default memo(GalleryItem);

@@ -178,7 +178,7 @@
 
 .section-dua-hero-subtitle {
   margin: 0 0 clamp(4px, 0.5vw, 8px);
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: var(--font-Poppins), Arial, sans-serif;
   font-size: clamp(1.0rem, 1.9vw + 0.3rem, 1.9rem);
   font-weight: 750;
   line-height: 1.15;
@@ -189,7 +189,7 @@
 
 .hero-title-2 {
   margin: 0;
-  font-family: "Firlest", serif;
+  font-family: var(--font-Firlest), serif;
   font-size: clamp(2.0rem, 5vw + 0.4rem, 5rem);
   font-weight: 550;
   line-height: 0.95;

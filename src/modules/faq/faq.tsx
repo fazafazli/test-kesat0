@@ -87,7 +87,6 @@ export default function FAQ() {
         </div>
       </div>
 
-      {/* Awan kanan */}
       <div className="animate-slideIn absolute inset-0 w-full h-full pointer-events-none [animation-fill-mode:forwards] motion-reduce:animate-none">
         <div className="animate-wiggle">
         <Image
@@ -103,10 +102,10 @@ export default function FAQ() {
 
       <DefaultLayout className="pt-28 px-2 w-full gap-0" style={{ paddingTop: '130px' }}>
         <div className="z-[3] flex w-full flex-col items-center justify-start text-center px-4 pt-6 md:pt-36 lg:pt-48 pb-6">
-          <h1 className="faq-title m-0 p-0 text-3xl sm:text-3xl md:text-[64px] lg:text-[84px] leading-none font-[Firlest] lowercase">
+          <h1 className="faq-title m-0 p-0 text-3xl sm:text-3xl md:text-[64px] lg:text-[84px] leading-none font-Firlest lowercase">
             frequently asked questions
           </h1>
-          <p className="mt-2 sm:mt-3 font-[Poppins] font-normal text-xs sm:text-sm md:text-base text-[rgba(252,240,214,0.8)]">
+          <p className="mt-2 sm:mt-3 font-Poppins font-normal text-xs sm:text-sm md:text-base text-[rgba(252,240,214,0.8)]">
             Ketuk pertanyaan untuk melihat jawabannya
           </p>
         </div>

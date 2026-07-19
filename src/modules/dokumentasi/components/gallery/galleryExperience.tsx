@@ -122,7 +122,7 @@ export default function GalleryExperience({
             className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
           >
             <div className="relative bg-white border-[6px] border-[#E8920D] rounded-[2.5rem] py-6 px-10 md:py-8 md:px-16 shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
-              <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
+              <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-Firlest lowercase drop-shadow-sm">
                 PIONIR KESATRIA<br />2025
               </h2>
 
@@ -144,7 +144,7 @@ export default function GalleryExperience({
             className="absolute z-50 flex flex-col items-center justify-center will-change-transform"
           >
             <div className="relative bg-white border-[6px] border-[#E8920D] rounded-[2.5rem] py-6 px-10 md:py-8 md:px-16 shadow-[0_15px_40px_rgba(0,0,0,0.25)] flex items-center justify-center text-center">
-              <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-[Firlest] lowercase drop-shadow-sm">
+              <h2 className="relative z-10 text-2xl md:text-4xl lg:text-[40px] text-[#FFC446] leading-tight font-Firlest lowercase drop-shadow-sm">
                 PIONIR KESATRIA 2026<br />Coming Soon
               </h2>
 

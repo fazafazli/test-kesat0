@@ -89,7 +89,7 @@
 }
 
 .faq-question {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-Poppins), sans-serif;
   font-weight: 700;
   color: #1a1410;
   font-size: clamp(0.90rem, 2.32vw, 1.15rem);
@@ -139,7 +139,7 @@
 .faq-answer {
   background: #fde0a3;
   color: #1a1410;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-Poppins), sans-serif;
   font-weight: 400;
   font-size: clamp(0.80rem, 2.17vw, 1.05rem);
   line-height: 1.7;

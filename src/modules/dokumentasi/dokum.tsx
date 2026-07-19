@@ -72,13 +72,13 @@ export default function Dokum() {
           <DefaultLayout>
             <div className="hero-title-area">
               <div className="animate-fadeInDown">
-                <h1 className="hero-title page-title m-0 p-0 font-[Firlest] lowercase">
+                <h1 className="hero-title page-title m-0 p-0 font-Firlest lowercase">
                   dokumentasi
                 </h1>
-                <h1 className="hero-title page-title m-0 p-0 font-[Firlest] lowercase">
+                <h1 className="hero-title page-title m-0 p-0 font-Firlest lowercase">
                   pionir kesatria 2026
                 </h1>
-                <p className="mt-2 sm:mt-3 font-[Poppins] font-normal text-xs sm:text-sm md:text-base text-[rgba(252,240,214,0.8)]">
+                <p className="mt-2 sm:mt-3 font-Poppins font-normal text-xs sm:text-sm md:text-base text-[rgba(252,240,214,0.8)]">
                   Ikuti anak panah untuk menelusuri dokumentasi kegiatan Pionir Kesatria 2026
                 </p>
               </div>
