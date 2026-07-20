@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import DefaultLayout from "@/utils/defaultlayout";
 import Image from "next/image";
 import GalleryExperience from "./components/gallery/galleryExperience";
@@ -8,6 +8,10 @@ import "./dokum.css";
 
 export default function Dokum() {
   const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -93,6 +97,7 @@ export default function Dokum() {
               height={42}
               className="scroll-hint-arrow scroll-hint-arrow-1"
               unoptimized
+              style={{ height: "auto" }}
             />
             <Image
               src="/dokumentasi/anakPanah.webp"
@@ -100,6 +105,7 @@ export default function Dokum() {
               width={42}
               height={42}
               className="scroll-hint-arrow scroll-hint-arrow-2"
+              style={{ height: "auto" }}
             />
             <Image
               src="/dokumentasi/anakPanah.webp"
@@ -107,6 +113,7 @@ export default function Dokum() {
               width={42}
               height={42}
               className="scroll-hint-arrow scroll-hint-arrow-3"
+              style={{ height: "auto" }}
             />
           </div>
         </div>

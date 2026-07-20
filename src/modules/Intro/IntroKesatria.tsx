@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./IntroKesatria.css";
 import Image from "next/image";
 
@@ -61,19 +61,24 @@ export default function IntroKesatria({
 }: IntroKesatriaProps) {
   const [flying, setFlying] = useState(false);
   const [sparks, setSparks] = useState<Spark[]>([]);
+  const onFinishRef = useRef(onFinish);
+  const onSectionAppearRef = useRef(onSectionAppear);
+  useEffect(() => { onFinishRef.current = onFinish; });
+  useEffect(() => { onSectionAppearRef.current = onSectionAppear; });
+
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSparks(makeSparks(40));
+    const id = setTimeout(() => setSparks(makeSparks(40)), 0);
+    return () => clearTimeout(id);
   }, []);
 
   useEffect(() => {
     const flyTimer = setTimeout(() => setFlying(true), FLYING_DELAY_MS);
     const sectionTimer = setTimeout(
-      () => onSectionAppear?.(),
+      () => onSectionAppearRef.current?.(),
       SECTION_APPEAR_DELAY_MS,
     );
-    const finishTimer = setTimeout(() => onFinish?.(), FINISH_DELAY_MS);
+    const finishTimer = setTimeout(() => onFinishRef.current?.(), FINISH_DELAY_MS);
     return () => {
       clearTimeout(flyTimer);
       clearTimeout(sectionTimer);
@@ -108,7 +113,16 @@ export default function IntroKesatria({
         <div className="rb-wayang-row rb-wayang-row-kiri">
           {wayangKiriAtasSrc && (
             <div className="rb-wayang rb-wayang--atas">
-              <Image src={wayangKiriAtasSrc} alt={wayangAlt} draggable={false} width={300} height={300}/>
+              <Image
+                src={wayangKiriAtasSrc}
+                alt={wayangAlt}
+                draggable={false}
+                width={950}
+                height={950}
+                priority
+                sizes="(max-width: 450px) 250px, (max-width: 1000px) 650px, 950px"
+                style={{ height: "auto" }}
+              />
             </div>
           )}
         </div>
@@ -117,7 +131,16 @@ export default function IntroKesatria({
         <div className="rb-wayang-row rb-wayang-row-kanan">
           {wayangKananAtasSrc && (
             <div className="rb-wayang rb-wayang--atas">
-              <Image src={wayangKananAtasSrc} alt={wayangAlt} draggable={false} width={300} height={300}/>
+              <Image
+                src={wayangKananAtasSrc}
+                alt={wayangAlt}
+                draggable={false}
+                width={950}
+                height={950}
+                priority
+                sizes="(max-width: 450px) 250px, (max-width: 1000px) 650px, 950px"
+                style={{ height: "auto" }}
+              />
             </div>
           )}
         </div>
@@ -148,8 +171,10 @@ export default function IntroKesatria({
             src={birdImageSrc}
             alt={birdImageAlt}
             draggable={false}
-            width={300}
-            height={300}
+            fill
+            sizes="150vw"
+            priority
+            fetchPriority="high"
           />
         </div>
       </div>

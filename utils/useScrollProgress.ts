@@ -108,7 +108,7 @@ export function useScrollProgress<T extends HTMLElement>(options?: {
       reducedMotion.removeEventListener("change", schedule);
       if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId);
     };
-  }, [viewportStart, cssVar, reducedMotionValue, smoothing]);
+  }, [viewportStart, cssVar, reducedMotionValue, mirrorTo, smoothing]);
 
   return measureRef;
 }

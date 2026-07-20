@@ -11,20 +11,24 @@ export default function SectionSatu() {
         src="/section1/EfekWelcome.svg"
         alt=""
         aria-hidden="true"
-        fill
-        sizes="100vw"
         className="bg-efek"
         unoptimized
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: '100%', height: '100%' }}
       />
       <Image
         src="/section1/background1.webp"
         alt=""
         aria-hidden="true"
-        fill
-        sizes="100vw"
+        className="bg-main"
         priority
         fetchPriority="high"
-        className="bg-main"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: '100%', height: '100%' }}
       />
 
       <DefaultLayout className="py-0! px-0! gap-0! justify-center! items-center! min-h-screen! max-w-none!">

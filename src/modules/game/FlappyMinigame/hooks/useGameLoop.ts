@@ -1,11 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-
-/* ========================================
-   useGameLoop Hook
-   Provides a stable requestAnimationFrame loop.
-   ======================================== */
+import { useRef, useEffect, useCallback } from "react";
 
 export const useGameLoop = (
   callback: (deltaTime: number) => void,
@@ -15,16 +10,14 @@ export const useGameLoop = (
   const lastTimeRef = useRef<number>(0);
   const callbackRef = useRef(callback);
 
-  /* Keep callback ref current */
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  /* Define loop as a standard function. 
-     Because it's a 'function' declaration, it is hoisted 
-     and can safely call itself recursively! 
-  */
-  function loop(timestamp: number) {
+  // Wrap loop in useCallback and use a ref pattern for recursion
+  const loopRef = useRef<(timestamp: number) => void>(() => {});
+
+  const loop = useCallback((timestamp: number) => {
     if (lastTimeRef.current === 0) {
       lastTimeRef.current = timestamp;
     }
@@ -32,17 +25,21 @@ export const useGameLoop = (
     const deltaTime = timestamp - lastTimeRef.current;
     lastTimeRef.current = timestamp;
 
-    /* Cap delta to prevent huge jumps after tab switch */
     const cappedDelta = Math.min(deltaTime, 33.33);
     callbackRef.current(cappedDelta);
 
-    rafIdRef.current = requestAnimationFrame(loop);
-  }
+    rafIdRef.current = requestAnimationFrame((t) => loopRef.current(t));
+  }, []);
+
+  // Keep loopRef updated to the latest useCallback instance
+  useEffect(() => {
+    loopRef.current = loop;
+  }, [loop]);
 
   useEffect(() => {
     if (isRunning) {
       lastTimeRef.current = 0;
-      rafIdRef.current = requestAnimationFrame(loop);
+      rafIdRef.current = requestAnimationFrame((t) => loopRef.current(t));
     }
 
     return () => {
@@ -51,5 +48,5 @@ export const useGameLoop = (
         rafIdRef.current = 0;
       }
     };
-  }, [isRunning]); // No need to include 'loop' here anymore
+  }, [isRunning, loop]); // <-- Now 'loop' is included, and the linter is happy!
 };

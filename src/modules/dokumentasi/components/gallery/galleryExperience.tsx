@@ -25,6 +25,7 @@ export default function GalleryExperience({
   useLayoutEffect(() => {
     let cancelled = false;
     let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+    let refreshTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const ctx = gsap.context(() => {
       if (
@@ -85,12 +86,17 @@ export default function GalleryExperience({
       };
     });
 
+    refreshTimeout = setTimeout(() => {
+      if (!cancelled) ScrollTrigger.refresh();
+    }, 300);
+
     return () => {
       cancelled = true;
       if (resizeTimeout) clearTimeout(resizeTimeout);
+      if (refreshTimeout) clearTimeout(refreshTimeout);
       ctx.revert();
     };
-  }, []);
+  }, [heroRef]);
 
   return (
     <div ref={triggerRef} className="relative h-full w-full">

@@ -112,6 +112,7 @@ export default function SiteWithIntro({
   }, [reveal]);
 
   const handleIntroFinish = () => {
+    canSkip.current = false;
     setPhase("revealing");
     setTimeout(() => {
       setPhase("done");

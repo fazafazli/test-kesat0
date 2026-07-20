@@ -1,10 +1,7 @@
 import Image from "next/image";
 
-type PageFooterProps = {
-  showDecor?: boolean;
-};
 
-export default function PageFooter({ showDecor = true }: PageFooterProps) {
+export default function PageFooter() {
   return (
     <div className="relative w-full h-[180px] md:h-[300px] lg:h-[500px] pointer-events-none">
       <Image
@@ -13,7 +10,6 @@ export default function PageFooter({ showDecor = true }: PageFooterProps) {
         className="absolute bottom-[2vh] max-md:landscape:bottom-[6vh] lg:bottom-[18vh] -left-[3vw] z-[2] w-[55vw] -translate-x-1/2"
         width={600}
         height={100}
-        loading="lazy"
       />
 
       <Image
@@ -22,7 +18,6 @@ export default function PageFooter({ showDecor = true }: PageFooterProps) {
         className="absolute bottom-[7vh] max-md:landscape:bottom-[11vh] md:bottom-[28vh] lg:bottom-[42vh] left-0 w-[13.5vw]"
         width={200}
         height={200}
-        loading="lazy"
       />
 
       <Image
