@@ -1,7 +1,7 @@
 "use client";
 
 import DefaultLayout from "@/utils/defaultlayout";
-import "./SectionTiga.css";
+import "@/styles/sections/section-tiga.css";
 import Image from "next/image";
 import Link from "next/link";
 import BoxKuning from "../../components/BoxKuning/BoxKuning";

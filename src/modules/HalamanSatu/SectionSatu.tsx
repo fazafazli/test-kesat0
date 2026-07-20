@@ -2,21 +2,28 @@
 
 import DefaultLayout from "@/utils/defaultlayout";
 import Image from "next/image";
-import "./SectionSatu.css";
+import "@/styles/sections/section-satu.css";
 
 export default function SectionSatu() {
   return (
     <section id="section-satu" className="section-satu">
-      <img
+      <Image
         src="/section1/EfekWelcome.svg"
         alt=""
         aria-hidden="true"
+        fill
+        sizes="100vw"
         className="bg-efek"
+        unoptimized
       />
-      <img
+      <Image
         src="/section1/background1.webp"
         alt=""
         aria-hidden="true"
+        fill
+        sizes="100vw"
+        priority
+        fetchPriority="high"
         className="bg-main"
       />
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import DefaultLayout from "@/utils/defaultlayout";
 import { useScrollProgress } from "@/utils/useScrollProgress";
-import "./SectionDua.css";
+import "@/styles/sections/section-dua.css";
 
 const YOUTUBE_VIDEO_ID = "zuJbK71Zjfo";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import "./SectionLima.css";
+import "@/styles/sections/section-lima.css";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultLayout from "@/utils/defaultlayout";

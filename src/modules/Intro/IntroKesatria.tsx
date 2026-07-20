@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./IntroKesatria.css";
+import Image from "next/image";
 
 interface IntroKesatriaProps {
   onFinish?: () => void;
@@ -107,7 +108,7 @@ export default function IntroKesatria({
         <div className="rb-wayang-row rb-wayang-row-kiri">
           {wayangKiriAtasSrc && (
             <div className="rb-wayang rb-wayang--atas">
-              <img src={wayangKiriAtasSrc} alt={wayangAlt} draggable={false} />
+              <Image src={wayangKiriAtasSrc} alt={wayangAlt} draggable={false} width={300} height={300}/>
             </div>
           )}
         </div>
@@ -116,7 +117,7 @@ export default function IntroKesatria({
         <div className="rb-wayang-row rb-wayang-row-kanan">
           {wayangKananAtasSrc && (
             <div className="rb-wayang rb-wayang--atas">
-              <img src={wayangKananAtasSrc} alt={wayangAlt} draggable={false} />
+              <Image src={wayangKananAtasSrc} alt={wayangAlt} draggable={false} width={300} height={300}/>
             </div>
           )}
         </div>
@@ -142,11 +143,13 @@ export default function IntroKesatria({
 
       <div className={`rb-bird-wrap${flying ? " flying" : ""}`}>
         <div className="rb-wing-flap">
-          <img
+          <Image
             className="rb-bird-img"
             src={birdImageSrc}
             alt={birdImageAlt}
             draggable={false}
+            width={300}
+            height={300}
           />
         </div>
       </div>

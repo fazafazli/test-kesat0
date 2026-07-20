@@ -11,7 +11,7 @@ import {
 } from "react";
 import Image from "next/image";
 import DefaultLayout from "@/utils/defaultlayout";
-import "./SectionEmpat.css";
+import "@/styles/sections/section-empat.css";
 
 const ASSET = "/section4";
 
