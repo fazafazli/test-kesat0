@@ -167,3 +167,19 @@
     opacity: 0.85;
   }
 }
+
+.gallery-card-offset {
+  margin-top: 0;
+}
+
+@media (max-width: 926px) and (orientation: landscape) {
+  .gallery-card-offset {
+    margin-top: clamp(24px, 5vh, 32px);
+  }
+}
+
+@media (min-width: 927px) and (orientation: landscape) and (max-height: 850px) {
+  .gallery-card-offset {
+    margin-top: clamp(48px, 6vh, 64px);
+  }
+}

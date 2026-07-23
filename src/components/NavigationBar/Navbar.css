@@ -46,10 +46,9 @@
   min-height: 40px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 clamp(12px, 4vw, 16px);
 }
 
-/* Logo */
 .navbar-logo {
   display: flex;
   align-items: center;
@@ -61,20 +60,19 @@
 
 .navbar-logo img {
   width: auto;
-  height: 40px;
+  height: clamp(32px, 6vw, 40px);
   aspect-ratio: 285 / 248;
   flex-shrink: 0;
 }
 
 .logo-text {
   color: #3c3024;
-  font-size: 20px;
+  font-size: clamp(15px, 3.2vw, 20px);
   font-weight: 500;
   font-family: var(--font-poppins), sans-serif;
   white-space: nowrap;
 }
 
-/* Menu Desktop */
 .navbar-menu {
   display: flex;
   gap: 5px;
@@ -86,12 +84,13 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 8px clamp(10px, 1.2vw, 14px);
   border-radius: 6px;
   color: #3c3024;
-  font-size: 14px;
+  font-size: clamp(13px, 1vw, 14px);
   font-weight: 500;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .navbar-menu li a::after {
@@ -115,7 +114,6 @@
   font-weight: 700;
 }
 
-/* Hamburger Button */
 .hamburger {
   display: none;
   flex-shrink: 0;
@@ -153,7 +151,6 @@
   }
 }
 
-/* Menu Mobile */
 .navbar-menu-mobile {
   max-height: 0;
   overflow: hidden;
@@ -187,6 +184,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
   padding: 10px 14px;
   border-radius: 6px;
   color: #3c3024;
@@ -223,16 +221,16 @@
   .hamburger {
     display: block;
   }
-
-  .navbar-logo img {
-    width: auto;
-    height: 32px;
-  }
 }
 
-@media (max-width: 640px) {
-  .logo-text {
-    font-size: 16px;
+@media (max-width: 768px) {
+  .navbar-menu-mobile {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .navbar-menu-mobile.is-open {
+    padding: 8px 20px 16px;
   }
 }
 
@@ -249,12 +247,18 @@
     gap: 8px;
   }
 
-  .navbar-logo img {
-    width: auto;
-    height: 32px;
+  .navbar-menu-mobile {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .logo-text {
-    font-size: 15px;
+  .navbar-menu-mobile.is-open {
+    padding: 8px 16px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar-menu-mobile li a {
+    padding: 10px 10px;
   }
 }

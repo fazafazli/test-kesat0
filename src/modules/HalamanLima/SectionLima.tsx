@@ -20,7 +20,7 @@ export default function SectionLima() {
         });
       },
       {
-        threshold: 0.2,
+        threshold: 0.001,
       },
     );
 
@@ -208,6 +208,27 @@ export default function SectionLima() {
         src="/section5/Ellipse254.svg"
         alt=""
         className="Ellipse1"
+        width={300}
+        height={300}
+        />
+        <Image
+        src="/section5/Ellipse254.svg"
+        alt=""
+        className="Ellipse2"
+        width={300}
+        height={300}
+        />
+        <Image
+        src="/section5/Ellipse254.svg"
+        alt=""
+        className="Ellipse3"
+        width={300}
+        height={300}
+        />
+        <Image
+        src="/section5/Ellipse254.svg"
+        alt=""
+        className="Ellipse4"
         width={300}
         height={300}
         />

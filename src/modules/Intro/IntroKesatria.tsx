@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "./IntroKesatria.css";
 import Image from "next/image";
 
@@ -85,17 +85,6 @@ export default function IntroKesatria({
       clearTimeout(finishTimer);
     };
   }, []);
-  useEffect(() => {
-    const id = "rb-google-fonts";
-    if (document.getElementById(id)) return;
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;1,400;1,500&display=swap";
-    document.head.appendChild(link);
-  }, []);
-
   return (
     <div className={`rb-root${flying ? " flying" : ""}`}>
       <div className="rb-vignette" />
@@ -158,7 +147,7 @@ export default function IntroKesatria({
                 animationDelay: `${s.delay}s`,
                 ["--dx" as string]: s.dx,
                 ["--dy" as string]: s.dy,
-              } as React.CSSProperties
+              } as CSSProperties
             }
           />
         ))}
@@ -189,7 +178,7 @@ export default function IntroKesatria({
               style={
                 {
                   ["--logo-url" as string]: `url(${logoImageSrc})`,
-                } as React.CSSProperties
+                } as CSSProperties
               }
             />
           ) : (

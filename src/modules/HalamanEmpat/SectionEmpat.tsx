@@ -44,7 +44,7 @@ const TABS = [
       "Lembaga kemahasiswaan menjadi ruang bagi mahasiswa untuk belajar berorganisasi, " +
       "berkolaborasi, dan berkontribusi. Melalui lembaga, kesatria muda dapat memperluas " +
       "pengalaman di luar kegiatan akademik.",
-    moduleUrl: "https://drive.google.com/file/d/1DNxnEgLgVN68kVmIsTBULdifiw8PRSrj/view?usp=drive_link",
+    moduleUrl: "https://drive.google.com/file/d/15RAWh0ap6UxBDY7JnrpEyoddZZ1gvhHV/view?usp=drive_link",
     imageUrl: "/section4/jelajah.webp",
   },
   {
@@ -55,7 +55,7 @@ const TABS = [
       "Pameran karya menjadi wadah bagi mahasiswa Teknik untuk menunjukkan ide, proses, serta " +
       "hasil kreativitasnya. Kegiatan ini membantu mahasiswa mengembangkan keberanian dalam " +
       "menyampaikan karya.",
-    moduleUrl: "https://drive.google.com/file/d/1tHMWj01j0MCjI0z5qPNJh4sZj3djfXwk/view?usp=drive_link",
+    moduleUrl: "https://drive.google.com/file/d/1xH_-K5U2Obsok9I6cfVB5LfyyGyiK-pI/view?usp=drive_link",
     imageUrl: "/section4/pameran.webp",
   },
   {
@@ -67,7 +67,7 @@ const TABS = [
       "mulai dari laboratorium, ruang diskusi, hingga fasilitas praktik yang dapat dimanfaatkan " +
       "mahasiswa.",
     moduleUrl: "https://drive.google.com/file/d/1gWa9zYExKd6zxOvax9plinHqTxY1D1cC/view?usp=drive_link",
-    imageUrl: "",
+    imageUrl: "/section4/fasilitas.webp",
   },
 ] as const;
 

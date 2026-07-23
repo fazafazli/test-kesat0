@@ -67,6 +67,23 @@
   max-width: 400px;
 }
 
+.Ellipse5 {
+  position: absolute;
+  top: 15%;
+  right: -40%;
+  width: clamp(10px, 1200px, 1200px);
+  opacity: 0.5;
+  z-index: -5;
+}
+
+.Ellipse6 {
+  position: absolute;
+  top: 45%;
+  left: -40%;
+  width: clamp(10px, 1200px, 1200px);
+  opacity: 0.5;
+  z-index: -5;
+}
 /* =====================
    CONTENT WRAPPER
    Padding horizontal disatukan di sini,
@@ -365,7 +382,8 @@
 .row-sejarah-kesatria {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
   width: 100%;
   margin-top: 100px;
@@ -410,7 +428,7 @@
   line-height: 1.15;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .paragraf4 {

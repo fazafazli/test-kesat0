@@ -256,6 +256,20 @@ export default function SectionTiga() {
             </div>
           </div>
         </div>
+        <Image
+        src="/section5/Ellipse254.svg"
+        alt=""
+        width={300}
+        height={300}
+        className="Ellipse5"
+        />
+        <Image
+        src="/section5/Ellipse254.svg"
+        alt=""
+        width={300}
+        height={300}
+        className="Ellipse6"
+        />
       </DefaultLayout>
     </section>
   );

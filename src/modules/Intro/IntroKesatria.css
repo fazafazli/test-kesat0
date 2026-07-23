@@ -23,7 +23,7 @@
   min-height: 320px;
   position: relative;
   overflow: hidden;
-  font-family: "EB Garamond", Georgia, serif;
+  font-family: var(--font-eb-garamond), Georgia, serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -260,7 +260,7 @@
   left: 50%;
   transform: translateX(-50%);
   color: var(--gold-dim);
-  font-family: "EB Garamond", Georgia, serif;
+  font-family: var(--font-eb-garamond), Georgia, serif;
   font-style: italic;
   font-size: 12px;
   letter-spacing: 0.18em;
@@ -368,7 +368,7 @@
   background: transparent;
   border: 1px solid var(--gold-dim);
   color: var(--gold);
-  font-family: "EB Garamond", Georgia, serif;
+  font-family: var(--font-eb-garamond), Georgia, serif;
   font-style: italic;
   letter-spacing: 0.08em;
   font-size: 12px;

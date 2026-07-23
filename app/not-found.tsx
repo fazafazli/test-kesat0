@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../src/components/NavigationBar/Navbar";
+
+export const metadata: Metadata = {
+  title: "404 — Halaman Tidak Ditemukan | PIONIR KESATRIA 2026",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (

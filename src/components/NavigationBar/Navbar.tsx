@@ -8,7 +8,11 @@ import Image from "next/image";
 import "./Navbar.css";
 
 export default function Navbar(): JSX.Element {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname =
+    rawPathname !== "/" && rawPathname.endsWith("/")
+      ? rawPathname.slice(0, -1)
+      : rawPathname;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
 

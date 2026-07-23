@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, EB_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import "../src/components/NavigationBar/Navbar.css";
@@ -13,6 +13,14 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-eb-garamond",
+});
+
 const firlest = localFont({
   src: "../public/fonts/firlest-regular.otf",
   display: "swap",
@@ -22,6 +30,21 @@ const firlest = localFont({
 export const metadata: Metadata = {
   title: "PIONIR KESATRIA 2026",
   description: "Website resmi kegiatan Pionir Kesatria 2026",
+  openGraph: {
+    title: "PIONIR KESATRIA 2026",
+    description: "Website resmi kegiatan Pionir Kesatria 2026",
+    type: "website",
+    locale: "id_ID",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PIONIR KESATRIA 2026",
+    description: "Website resmi kegiatan Pionir Kesatria 2026",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -30,7 +53,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${poppins.variable} ${firlest.variable}`}>
+    <html lang="id" className={`${poppins.variable} ${ebGaramond.variable} ${firlest.variable}`}>
       <body>
         <AudioProvider>
           {children}

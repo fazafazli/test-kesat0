@@ -82,11 +82,40 @@
   z-index: 2;
 }
 
+/* NOTE: sebelumnya width: clamp(10px, 1200px, 1200px) — preferred value
+   1200px bukan unit vw/%, jadi clamp tidak pernah mengecil di layar kecil
+   dan menyebabkan overflow horizontal di mobile. Diganti ke unit relatif
+   dengan max-width sebagai batas atas. */
 .Ellipse1 {
   position: absolute;
   justify-self: center;
   top: -5%;
-  width: clamp(10px, 1200px, 1200px);
+  width: min(100%, 1200px);
+  opacity: 0.5;
+}
+
+.Ellipse2 {
+  position: absolute;
+  justify-self: center;
+  top: 20%;
+  left: -30%;
+  width: min(100%, 1200px);
+  opacity: 0.5;
+}
+
+.Ellipse3 {
+  position: absolute;
+  top: 40%;
+  right: -40%;
+  width: min(100%, 1200px);
+  opacity: 0.5;
+}
+
+.Ellipse4 {
+  position: absolute;
+  justify-self: center;
+  bottom: 3%;
+  width: min(100%, 1200px);
   opacity: 0.5;
 }
 
@@ -105,13 +134,14 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
+  overflow-x: hidden; /* jaring pengaman tambahan terhadap elemen dekorasi absolut */
 }
 
 /* =====================
    SHARED TEXT STYLES
    ===================== */
 .judul {
-  font-size: clamp(10px, 50px, 500px);
+  font-size: clamp(10px, 40px, 500px);
   font-family: "Firlest", serif;
   font-weight: 500;
   margin: 0;
@@ -305,11 +335,11 @@
 }
 
 .agenda-kiri {
-  align-items: center; 
-  text-align: center;
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 10px;
   right: -200px;
   flex: 1;
@@ -317,7 +347,7 @@
 }
 
 .agenda-kiri .judul {
-  font-size: clamp(10px,60px,500px);
+  font-size: clamp(10px, 60px, 500px);
 }
 
 .agenda-tombol-wrapper {
@@ -632,12 +662,35 @@
 
   .blok-agenda-atribut {
     gap: 24px;
+    margin-top: -50px;
+  }
+
+  /* Reset offset dari base sebelum menerapkan posisi baru */
+  .agenda-kiri {
+    right: auto;
+    left: 15%;
+  }
+
+  .agenda-kiri .judul {
+    font-size: clamp(10px, 35px, 500px);
+  }
+
+  .agenda-kanan {
+    width: clamp(160px, 75vw, 600px);
+    display: flex;
+    justify-content: center;
   }
 
   .Nala-Agenda {
-    width: clamp(130px, 20vw, 260px);
+    width: clamp(160px, 75vw, 600px);
   }
 
+  .Ellipse2 {
+    left: -50%;
+  }
+  .Ellipse4 {
+    bottom: -5%;
+  }
   .SayapTerakhir {
     margin-top: -50px;
   }
@@ -652,7 +705,7 @@
    ===================== */
 @media (max-width: 768px) {
   .section-lima-inner {
-    padding: 0 40px 0;
+    padding: 20px 40px 0;
     gap: 40px;
   }
 
@@ -670,7 +723,7 @@
   }
 
   .judul {
-    font-size: clamp(10px, 200px, 500px);
+    font-size: clamp(10px, 25px, 500px);
   }
 
   .blok-karya-kiri {
@@ -718,13 +771,24 @@
     margin-top: -50px;
   }
 
+  /* Layout jadi kolom, semua offset kiri/kanan lama harus di-nol-kan */
   .blok-agenda-atribut {
-    gap: 20px;
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .Nala-Agenda {
-    width: clamp(120px, 24vw, 220px);
+  .agenda-kanan {
+    order: -1;
+    right: auto; /* clear -5% dari breakpoint 1024px */
+    left: 0;
+    width: clamp(160px, 500px, 600px);
+    display: flex;
+    justify-content: center;
+  }
+
+  .agenda-kiri {
+    left: auto; /* clear 10% dari breakpoint 1024px */
+    right: auto;
   }
 
   .SayapTerakhir {
@@ -777,6 +841,7 @@
   }
 
   .AwanKecil2 {
+    width: 70%;
     left: -50%;
     margin-top: -80px;
   }
@@ -832,41 +897,20 @@
     align-items: center;
     text-align: center;
     gap: 10px;
-    margin-top: -100px;
+    margin-top: -40px;
   }
 
-  /* Blok 4 — Agenda: Nala6 pindah ke atas, teks+tombol di bawah,
-     sama pola kayak blok-karya & blok-aplikatif */
+  /* Blok 4 — Agenda: posisi sudah dinetralkan sejak breakpoint 768px,
+     di sini tinggal penyesuaian jarak vertikal saja */
   .blok-agenda-atribut {
-    flex-direction: column;
-    gap: 10px;
+    margin-top: -10px;
   }
 
-  .agenda-kanan {
-    order: -1;
-    width: clamp(160px, 900px, 1000px);
-    display: flex;
-    justify-content: center;
-  }
-
-  .agenda-kiri {
-    align-items: center;
-    text-align: center;
-  }
-
-  .agenda-tombol-wrapper {
-    justify-content: center;
-  }
-
-  .Nala-Agenda {
-    width: clamp(160px, 900px, 1000px);
+  .Ellipse4 {
+    bottom: 5%;
   }
 
   .SayapTerakhir {
-    margin-top: -50px;
-  }
-
-  .footer-area {
-    margin-top: 0;
+    margin-top: -20px;
   }
 }
