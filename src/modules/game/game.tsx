@@ -72,7 +72,7 @@ export default function game() {
               width={400}
               height={360}
             />
-            <div className="w-full aspect-[2/3] rounded-2xl md:rounded-[32px] border-[8px] md:border-[16px] border-[#E8920D] bg-[#FDF5E6] shadow-2xl relative overflow-hidden z-10 max-h-[calc(100dvh-280px)]">
+            <div className="w-full aspect-[2/3] rounded-2xl md:rounded-[32px] border-[8px] md:border-[16px] border-[#E8920D] bg-[#FDF5E6] shadow-2xl relative overflow-hidden z-10 max-h-[calc(100vh-200px)]">
               <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8 ">
                 <div className="w-full max-w-[840px] h-full">
                   <GamePage />
