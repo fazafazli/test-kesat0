@@ -73,17 +73,17 @@ export default function game() {
               height={360}
             />
             <div 
-  id="pionir-game-container"
-  className="w-full aspect-[2/3] rounded-2xl md:rounded-[32px] border-[8px] md:border-[16px] border-[#E8920D] bg-[#FDF5E6] shadow-2xl relative overflow-hidden z-10 max-h-[calc(100dvh-120px)] min-h-[700px] h-full flex flex-col items-center justify-center touch-none select-none"
->
-  <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8 min-h-0 min-w-0 [&>canvas]:max-w-full [&>canvas]:max-h-full [&>canvas]:object-contain">
-    <div className="w-full max-w-[840px] h-full flex items-center justify-center min-h-0 min-w-0">
-      <GamePage />
-    </div>
-  </div>
-</div>
-</div>
-</div>
+              id="pionir-game-container"
+              className="w-full aspect-[2/3] rounded-2xl md:rounded-[32px] border-[8px] md:border-[16px] border-[#E8920D] bg-[#FDF5E6] shadow-2xl relative overflow-hidden z-10 max-h-[calc(100dvh-120px)] min-h-[700px] h-full flex flex-col items-center justify-center touch-none select-none"
+            >
+            <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8 min-h-0 min-w-0 [&>canvas]:max-w-full [&>canvas]:max-h-full [&>canvas]:object-contain">
+              <div className="w-full max-w-[840px] h-full flex items-center justify-center min-h-0 min-w-0">
+                <GamePage />
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
       </DefaultLayout>
 
       <div className="relative flex justify-center pb-1 mt-4 sm:mt-0">

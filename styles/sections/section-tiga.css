@@ -402,7 +402,7 @@
 }
 
 .sejarahKesatria {
-  font-size: clamp(2rem, 4vw, 5rem);
+  font-size: clamp(10px, 60px, 500px);
   font-family: "Firlest", serif;
   font-weight: 500;
   margin: 0;

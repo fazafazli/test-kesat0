@@ -6,6 +6,7 @@ import {
   PIPE,
   GROUND,
   BIRD,
+  COLORS,
 } from "../constants/game";
 import type { Bird, PipePair } from "../types/game";
 
@@ -130,59 +131,98 @@ export const drawGround = (
   ctx: CanvasRenderingContext2D,
   offset: number
 ): void => {
-  if (cloudCache) {
-    ctx.drawImage(cloudCache, -offset, GROUND.y);
-    ctx.drawImage(cloudCache, CANVAS_WIDTH - offset - 20 , GROUND.y);
-  } else if (cloudImg && cloudImg.complete) {
-    ctx.drawImage(cloudImg, -offset, GROUND.y, CANVAS_WIDTH, GROUND.height);
-    ctx.drawImage(cloudImg, CANVAS_WIDTH - offset, GROUND.y, CANVAS_WIDTH, GROUND.height);
+  // Math for endless panning
+  const scrollX = -(offset % CANVAS_WIDTH);
+
+  const cloudHeight = GROUND.height;
+  
+  // FIX 1: Lock the clouds strictly to the bottom of the canvas
+  const cloudY = CANVAS_HEIGHT - cloudHeight; 
+
+  if (cloudImg && cloudImg.complete) {
+    // Draw the first cloud
+    ctx.drawImage(cloudImg, scrollX, cloudY, CANVAS_WIDTH, cloudHeight);
+    
+    // FIX 2: Subtract 1 pixel (CANVAS_WIDTH - 1) to overlap them and kill the vertical seam!
+    ctx.drawImage(cloudImg, scrollX + CANVAS_WIDTH - 1, cloudY, CANVAS_WIDTH, cloudHeight);
   } else {
-    ctx.fillStyle = "#F5DEB3";
-    ctx.fillRect(0, GROUND.y, CANVAS_WIDTH, GROUND.height);
+    ctx.fillStyle = "#e5ddc5";
+    ctx.fillRect(0, cloudY, CANVAS_WIDTH, cloudHeight);
   }
+};
+
+export const clearCanvas = (ctx: CanvasRenderingContext2D): void => {
+  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+};
+
+const drawBirdImage = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  rotation: number
+): void => {
+  ctx.save();
+  ctx.translate(x + BIRD.width / 2, y + BIRD.height / 2);
+  ctx.rotate((rotation * Math.PI) / 180);
+  ctx.translate(-(x + BIRD.width / 2), -(y + BIRD.height / 2));
+
+  const w = BIRD.width;
+  const h = BIRD.height;
+
+  if (nalaImg && nalaImg.complete) {
+    ctx.drawImage(nalaImg, x, y, w, h);
+  } else {
+    ctx.fillStyle = COLORS.birdBody;
+    ctx.beginPath();
+    ctx.ellipse(x + w / 2, y + h / 2, w / 2, h / 2, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = COLORS.birdBeak;
+    ctx.beginPath();
+    ctx.moveTo(x + w - 2, y + h / 2);
+    ctx.lineTo(x + w + 8, y + h / 2 - 4);
+    ctx.lineTo(x + w + 8, y + h / 2 + 4);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = COLORS.birdEye;
+    ctx.beginPath();
+    ctx.arc(x + w * 0.65, y + h * 0.35, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = COLORS.birdPupil;
+    ctx.beginPath();
+    ctx.arc(x + w * 0.7, y + h * 0.35, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  if (sayapImg && sayapImg.complete) {
+    ctx.drawImage(sayapImg, x - 5, y + h * 0.3, w * 0.5, h * 0.5);
+  } else {
+    ctx.fillStyle = COLORS.birdWing;
+    ctx.beginPath();
+    ctx.ellipse(x + w * 0.35, y + h * 0.55, w * 0.25, h * 0.18, -0.3, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.restore();
 };
 
 export const drawBird = (
   ctx: CanvasRenderingContext2D,
   bird: Bird,
-  flapFrame: number
+  _frame: number
 ): void => {
-  ctx.save();
+  drawBirdImage(ctx, bird.x, bird.y, bird.rotation);
+};
 
-  const centerX = bird.x + bird.width / 2;
-  const centerY = bird.y + bird.height / 2;
-  ctx.translate(centerX, centerY);
-  ctx.rotate((bird.rotation * Math.PI) / 180);
-
-  const VISUAL_SCALE = 1.3; 
-  const visualWidth = bird.width * VISUAL_SCALE;
-  const visualHeight = bird.height * VISUAL_SCALE;
-  const hw = visualWidth / 2;
-  const hh = visualHeight / 2;
-
-  if (nalaImg && nalaImg.complete) {
-    ctx.drawImage(nalaImg, -hw, -hh, visualWidth, visualHeight);
-  } else {
-    ctx.beginPath();
-    ctx.ellipse(0, 0, bird.width / 2, bird.height / 2, 0, 0, Math.PI * 2);
-    ctx.fillStyle = "#D4A017";
-    ctx.fill();
-  }
-
-  if (sayapImg && sayapImg.complete) {
-    const wingOffset = Math.sin(flapFrame * 0.5) * 4;
-    const wingWidth = visualWidth * 0.6;
-    const wingHeight = visualHeight * 0.6;
-    ctx.drawImage(
-      sayapImg,
-      -hw * 0.8, 
-      -wingHeight / 2 + wingOffset, 
-      wingWidth, 
-      wingHeight
-    );
-  }
-
-  ctx.restore();
+export const drawIdleBird = (
+  ctx: CanvasRenderingContext2D,
+  frame: number
+): void => {
+  const floatY = Math.sin(frame * 0.08) * 6;
+  const x = BIRD.x;
+  const y = BIRD.startY + floatY;
+  drawBirdImage(ctx, x, y, 0);
 };
 
 export const drawScore = (
@@ -190,28 +230,13 @@ export const drawScore = (
   score: number
 ): void => {
   const text = String(score);
-  ctx.font = 'bold 56px "Impact", sans-serif';
+  const fontSize = 48;
+  ctx.font = `bold ${fontSize}px Arial, sans-serif`;
   ctx.textAlign = "center";
-  ctx.fillStyle = "#6F4E37";
-  ctx.fillText(text, CANVAS_WIDTH / 2, 80);
-};
+  ctx.textBaseline = "top";
 
-export const drawIdleBird = (
-  ctx: CanvasRenderingContext2D,
-  frame: number
-): void => {
-  const idleBird: Bird = {
-    x: BIRD.x,
-    y: BIRD.startY + Math.sin(frame * 0.05) * 8,
-    width: BIRD.width,
-    height: BIRD.height,
-    velocity: 0,
-    rotation: 0,
-  };
-
-  drawBird(ctx, idleBird, frame);
-};
-
-export const clearCanvas = (ctx: CanvasRenderingContext2D): void => {
-  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.fillStyle = COLORS.scoreShadow;
+  ctx.fillText(text, CANVAS_WIDTH / 2 + 2, 22);
+  ctx.fillStyle = COLORS.scoreText;
+  ctx.fillText(text, CANVAS_WIDTH / 2, 20);
 };

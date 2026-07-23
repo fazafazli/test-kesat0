@@ -93,16 +93,15 @@ export default function SectionTiga() {
             <h2 className="tiga-text judul-tiga">kesatria merajut karsa</h2>
           </div>
           <p className="paragraf1">
-            Dalam mengenal Fakultas Teknik UGM sebagai lingkungan baru bagi
-            Kesatria Muda yang akan menapaki dunia perkuliahan, tentunya
-            membutuhkan pengetahuan tentang apa saja yang ada di Fakultas
-            Teknik. Selain mengenal lingkungan baru, Kesatria Muda juga
-            diharapkan dapat mulai mengenal diri sendiri melalui personal
-            branding yang akan menunjukkan pribadi Kesatria Muda di lingkungan
-            Fakultas Teknik UGM. Selain modul utama tentang personal branding,
-            pada bagian 1 ini juga terdapat 2 video menarik yaitu &quot;Sejarah
-            Teknik&quot; dan &quot;Sejarah Kesatria&quot; yang wajib ditonton
-            sebelum kita bertemu secara offline di Pionir Kesatria nanti.
+            Sebagai rumah baru bagi Kesatria Muda, Fakultas Teknik Universitas
+            Gadjah Mada memiliki sejarah panjang sebagai salah satu Fakultas
+            Teknik tertua di Indonesia. Dalam menapaki awal perkuliahan, sejarah
+            bagaimana fakultas kita berdiri, termasuk bagaimana masa
+            orientasinya dilahirkan adalah informasi yang penting untuk
+            diketahui karena merupakan jati diri dari Fakultas Teknik UGM itu
+            sendiri. Selain itu, jati dirimu sebagai Kesatria Muda juga perlu
+            digali melalui &quot;Cita Mula Sang Arunara&quot; dan &quot;Kala Itihasa: Ketika
+            Memori Bersuara&quot;.
           </p>
           <div className="BoxBesarWrapper">
             <div className="BoxBesar-inner">
@@ -191,7 +190,11 @@ export default function SectionTiga() {
                         aria-label="Putar video Sejarah Kesatria"
                         onClick={activateVideo}
                         onKeyDown={handleKeyDown}
-                        style={{ position: "absolute", inset: 0, cursor: "pointer" }}
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          cursor: "pointer",
+                        }}
                       >
                         <Image
                           src={`https://i.ytimg.com/vi/${VIDEO_ID}/hqdefault.jpg`}

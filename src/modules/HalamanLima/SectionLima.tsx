@@ -159,7 +159,41 @@ export default function SectionLima() {
             </div>
           </div>
 
-        
+          <div className="blok-agenda-atribut">
+            <div className="agenda-kiri">
+              <h2 className="garis-text judul">Agenda &amp; Atribut</h2>
+              <div className="agenda-tombol-wrapper">
+                <Link
+                  href="https://pionir.ugm.ac.id/2026/aktivitas/kegiatan/hari-3-fakultas/teknik/?from=fakultas-directory"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className="btn-modul">
+                    <span className="btn-modul-text">DAY 1</span>
+                  </button>
+                </Link>
+                <Link
+                  href="https://pionir.ugm.ac.id/2026/aktivitas/kegiatan/hari-4-fakultas/teknik/?from=fakultas-directory"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className="btn-modul">
+                    <span className="btn-modul-text">DAY 2</span>
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className="agenda-kanan">
+              <Image
+                src="/section5/Nala6.webp"
+                alt=""
+                aria-hidden="true"
+                className="Nala-Agenda"
+                width={1000}
+                height={1000}
+              />
+            </div>
+          </div>
 
           <Image
             src="./section5/SayapTerakhir.svg"
@@ -170,22 +204,29 @@ export default function SectionLima() {
             className="SayapTerakhir"
           />
         </div>
+        <Image
+        src="/section5/Ellipse254.svg"
+        alt=""
+        className="Ellipse1"
+        width={300}
+        height={300}
+        />
       </DefaultLayout>
 
       <div className="footer-area">
         <Image
-        src="/section5/SerpihanDaun2.svg"
-        alt=""
-        className="DaunFooter"
-        width={300}
-        height={300}
+          src="/section5/SerpihanDaun2.svg"
+          alt=""
+          className="DaunFooter"
+          width={300}
+          height={300}
         />
         <Image
-        src="/section3/PitaBaru2.svg"
-        alt=""
-        className="PitaFooter"
-        width={300}
-        height={300}
+          src="/section3/PitaBaru2.svg"
+          alt=""
+          className="PitaFooter"
+          width={300}
+          height={300}
         />
         <Image
           src="/dokumentasi/footer.svg"
