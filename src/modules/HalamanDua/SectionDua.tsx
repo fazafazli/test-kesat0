@@ -6,7 +6,7 @@ import DefaultLayout from "@/utils/defaultlayout";
 import { useScrollProgress } from "@/utils/useScrollProgress";
 import "@/styles/sections/section-dua.css";
 
-const YOUTUBE_VIDEO_ID = "zuJbK71Zjfo";
+const YOUTUBE_VIDEO_ID = "5CdI5BVZl7c";
 
 const GUNUNGAN_POSITIONS = ["g-outer-left", "g-inner-left", "g-inner-right", "g-outer-right"] as const;
 

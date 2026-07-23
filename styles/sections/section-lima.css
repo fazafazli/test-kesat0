@@ -212,6 +212,7 @@
   width: 120%;
   aspect-ratio: 1;
   margin-left: -80px;
+  z-index: 5;
 }
 
 .AwanKecil2 {
@@ -220,7 +221,7 @@
   height: auto;
   margin-top: -100px;
   left: -70%;
-  z-index: -5;
+  z-index: -10;
 }
 
 /* =====================
@@ -402,6 +403,18 @@
   pointer-events: none;
 }
 
+.DaunFooter {
+  position: absolute;
+  width: 15%;
+}
+
+.PitaFooter {
+  position: absolute;
+  width: 30%;
+  left: -10%;
+  bottom: 40%;
+}
+
 /* =====================
    FOOTER TEXT — KESATRIA MUDA
    ===================== */
@@ -458,6 +471,9 @@
     -webkit-text-stroke: 0.5px var(--outline-color, #e8920d);
   }
 
+  .judul {
+    font-size: clamp(10px, 35px, 500px);
+  }
   .blok-karya {
     gap: 20px;
     width: 100%;
@@ -535,6 +551,10 @@
   .blok-karya {
     gap: 20px;
     width: 100%;
+  }
+
+  .judul {
+    font-size: clamp(10px, 200px, 500px);
   }
 
   .blok-karya-kiri {

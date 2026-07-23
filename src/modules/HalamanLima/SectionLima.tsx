@@ -159,6 +159,8 @@ export default function SectionLima() {
             </div>
           </div>
 
+        
+
           <Image
             src="./section5/SayapTerakhir.svg"
             alt=""
@@ -171,6 +173,20 @@ export default function SectionLima() {
       </DefaultLayout>
 
       <div className="footer-area">
+        <Image
+        src="/section5/SerpihanDaun2.svg"
+        alt=""
+        className="DaunFooter"
+        width={300}
+        height={300}
+        />
+        <Image
+        src="/section3/PitaBaru2.svg"
+        alt=""
+        className="PitaFooter"
+        width={300}
+        height={300}
+        />
         <Image
           src="/dokumentasi/footer.svg"
           alt=""

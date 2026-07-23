@@ -13,8 +13,8 @@ export default function Home() {
       <SiteWithIntro
         birdImageSrc="/intro/bird.svg"
         logoImageSrc="/section2/logo.svg"
-        wayangKananAtasSrc="/intro/gunungannew.svg"
-        wayangKiriAtasSrc="/intro/gunungannew.svg"
+        wayangKananAtasSrc="/section2/gunungan.webp"
+        wayangKiriAtasSrc="/section2/gunungan.webp"
       >
         <Section1 />
         <Section2 />

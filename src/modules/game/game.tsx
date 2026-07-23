@@ -62,7 +62,7 @@ export default function game() {
           </div>
         </div>
 
-        <div className="relative mt-5 sm:mt-8 w-full max-w-[1500px] mx-auto flex justify-center max-h-[calc(95vh-80px)] min-h-[900px]">
+        <div className="relative mt-5 sm:mt-8 w-full max-w-[1500px] mx-auto flex justify-center">
           <div className="relative w-full max-w-[1500px] [--nala-w:220px] sm:[--nala-w:320px] md:[--nala-w:420px] lg:[--nala-w:520px]">
             <Image
               src="/dokumentasi/nala2.webp"
@@ -72,7 +72,7 @@ export default function game() {
               width={400}
               height={360}
             />
-            <div className="w-full aspect-[2/3] rounded-2xl md:rounded-[32px] border-[8px] md:border-[16px] border-[#E8920D] bg-[#FDF5E6] shadow-2xl relative overflow-hidden z-10 max-h-[calc(95vh-120px)] min-h-[740px]">
+            <div className="w-full aspect-[2/3] rounded-2xl md:rounded-[32px] border-[8px] md:border-[16px] border-[#E8920D] bg-[#FDF5E6] shadow-2xl relative overflow-hidden z-10 max-h-[calc(100dvh-280px)]">
               <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8 ">
                 <div className="w-full max-w-[840px] h-full">
                   <GamePage />
